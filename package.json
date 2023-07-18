@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@trussworks/react-uswds": "^5.1.1",
+    "@types/react-redux": "^7.1.25",
     "i18next": "^23.2.11",
     "i18next-browser-languagedetector": "^7.1.0",
     "react": "^18.2.0",
