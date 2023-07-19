@@ -1,6 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
 import "./Navigation.css";
-import { Button } from "@trussworks/react-uswds";
 
 function Navigation() {
   return (
@@ -21,6 +20,11 @@ function Navigation() {
           <li>
             <Link className="nav-link" to={"/display"}>
               View Deduction
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to={"/profile"}>
+              Profile
             </Link>
           </li>
           <li>
