@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ILoginUserDTO } from "../../utils/interfaces";
+import { getUser } from "../../utils/api/userApi";
 
 const defaultFormInput = {
   email: "",
@@ -28,15 +29,13 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password } = formInput;
 
-    const inventoryDataPayload: ILoginUserDTO = {
+    const userPayload: ILoginUserDTO = {
       ...formInput,
-      email,
-      password,
     };
-
-    console.log(inventoryDataPayload);
+    // getUser(userPayload);
+    setFormInput(defaultFormInput);
+    setShowPassword(false);
   };
   return (
     <>

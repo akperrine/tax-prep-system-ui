@@ -27,8 +27,6 @@ function SignUpForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password } = formInput;
-
     const inventoryDataPayload: ISignUpUserDTO = {
       ...formInput,
     };
