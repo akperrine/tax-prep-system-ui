@@ -6,11 +6,10 @@
   --secondary-color: #0078ae;
   --accent-color: #5a5b5d;
   --text-color: #000000;
-  --background: #f8f8f8;
+  --background: #fff;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: var(--text-color);
-  background-color: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,6 +22,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0px;
+  /* background-color: var(--background); */
 }
 
 body {
@@ -31,6 +31,18 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+ol {
+  list-style-type: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+li {
+  list-style-type: none;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 a {
