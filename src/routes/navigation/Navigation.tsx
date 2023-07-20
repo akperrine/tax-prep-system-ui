@@ -1,7 +1,16 @@
 import { Link, Outlet } from "react-router-dom";
 import "./Navigation.css";
+import { Grid, PrimaryNav } from "@trussworks/react-uswds";
 
 function Navigation() {
+  const navItems = [
+    <Link className="nav-link" to={"/"}>
+      Home
+    </Link>,
+    <Link className="nav-link" to={"/file"}>
+      File taxes
+    </Link>,
+  ];
   return (
     <>
       <nav className="navbar">
