@@ -7,20 +7,19 @@ import {
 } from "@trussworks/react-uswds";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ILoginUserDTO } from "../../utils/interfaces";
+import { ISignUpUserDTO } from "../../utils/interfaces";
 
 const defaultFormInput = {
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
 };
 
-function LoginForm() {
+function SignUpForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleToggle = () => setShowPassword((showPassword) => !showPassword);
-
-  // update inputs to state
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormInput({ ...formInput, [name]: value });
@@ -30,21 +29,42 @@ function LoginForm() {
     e.preventDefault();
     const { email, password } = formInput;
 
-    const inventoryDataPayload: ILoginUserDTO = {
+    const inventoryDataPayload: ISignUpUserDTO = {
       ...formInput,
-      email,
-      password,
     };
 
     console.log(inventoryDataPayload);
   };
+
+  const handleToggle = () => setShowPassword(!showPassword);
   return (
     <>
       <Form onSubmit={handleSubmit} large data-testid="custom-element">
-        <Fieldset legend="Sign In" legendStyle="large">
+        <Fieldset legend="Sign Up" legendStyle="large">
           <span>
-            or <Link to={"/signup"}>Create an account</Link>
+            {/* or <a href="../login">Already have an account?</a> */}
+            or <Link to={"/login"}>Already have an account?</Link>
           </span>
+          <Label htmlFor="firstName">First Name</Label>
+          <TextInput
+            onChange={handleFormChange}
+            className="usa-input"
+            id="firstName"
+            name="firstName"
+            type="text"
+            autoCapitalize="off"
+            autoCorrect="off"
+          />
+          <Label htmlFor="lastName">Last Name</Label>
+          <TextInput
+            onChange={handleFormChange}
+            className="usa-input"
+            id="lastName"
+            name="lastName"
+            type="text"
+            autoCapitalize="off"
+            autoCorrect="off"
+          />
           <Label htmlFor="email">Email</Label>
           <TextInput
             onChange={handleFormChange}
@@ -67,7 +87,7 @@ function LoginForm() {
               title="Show password"
               //   href="javascript:void(0);"
               className="usa-show-password"
-              aria-controls="password-sign-in"
+              aria-controls="password"
               onClick={handleToggle}
             >
               {showPassword ? "Hide password" : "Show password"}
@@ -80,17 +100,10 @@ function LoginForm() {
               Google Sign In
             </Button>
           </p>
-          {/* <a
-              className="usa-b"
-              href="javascript:void(0);"
-              title="Forgot password"
-            >
-              Forgot password?
-            </a> */}
         </Fieldset>
       </Form>
     </>
   );
 }
 
-export default LoginForm;
+export default SignUpForm;
