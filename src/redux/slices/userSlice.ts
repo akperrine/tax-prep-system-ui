@@ -13,6 +13,7 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
     clearUser: (state) => {
+      console.log("fires");
       state.user = null;
     },
   },

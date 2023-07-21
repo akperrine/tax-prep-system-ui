@@ -4,11 +4,16 @@ import "./Navigation.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useDispatch } from "react-redux";
+import { clearUser } from "../../redux/slices/userSlice";
 
 function Navigation() {
   // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
   console.log(user);
+
+  const handleSignOut = () => dispatch(clearUser());
+
   const navItems = [
     <Link className="nav-link" to={"/"}>
       Home
@@ -22,7 +27,7 @@ function Navigation() {
     <Link className="nav-link" to={"/profile"}>
       Profile
     </Link>,
-    <Link className="nav-link" to={"/login"}>
+    <Link className="nav-link" to={"/login"} onClick={handleSignOut}>
       Sign Out
     </Link>,
   ];
