@@ -27,7 +27,7 @@ function Navigation() {
     <Link className="nav-link" to={"/profile"}>
       Profile
     </Link>,
-    <Link className="nav-link" to={"/login"} onClick={handleSignOut}>
+    <Link className="nav-link" to={"/"} onClick={handleSignOut}>
       Sign Out
     </Link>,
   ];

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -44,7 +45,11 @@ function LoginForm() {
           dispatch(setUser(data));
           navigate("/");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => (
+          <Alert type="error" heading="User Not Found" headingLevel="h4">
+            {error}
+          </Alert>
+        ));
     } catch (error) {
       setFormInput(defaultFormInput);
       setShowPassword(false);
