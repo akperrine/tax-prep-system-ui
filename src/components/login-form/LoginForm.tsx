@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ILoginUserDTO } from "../../utils/interfaces";
 import { getUser } from "../../utils/api/userApi";
 import { useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ const defaultFormInput = {
 function LoginForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleToggle = () => setShowPassword((showPassword) => !showPassword);
@@ -61,6 +62,7 @@ function LoginForm() {
       dispatch(setUser(mockReturn));
       setFormInput(defaultFormInput);
       setShowPassword(false);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

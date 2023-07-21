@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route, Router, Routes } from "react-router-dom";
 import "./App.css";
 import Navigation from "./routes/navigation/Navigation";
 import Home from "./routes/home/Home";
@@ -7,9 +7,11 @@ import TaxView from "./routes/TaxView";
 import Login from "./routes/login/Login";
 import Profile from "./routes/Profile";
 import SignUp from "./routes/signup/SignUp";
+import { useState } from "react";
 // import { useTranslation } from "react-i18next";å
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <>
       <Routes>
