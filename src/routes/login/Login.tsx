@@ -5,9 +5,7 @@ import "./Login.css";
 function Login() {
   return (
     <div className="login-container">
-      <Card>
-        <LoginForm />
-      </Card>
+      <LoginForm />
     </div>
   );
 }

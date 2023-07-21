@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  Card,
   Fieldset,
   Form,
   Label,
@@ -22,6 +23,7 @@ const defaultFormInput = {
 function LoginForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
+  const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,68 +47,78 @@ function LoginForm() {
           dispatch(setUser(data));
           navigate("/");
         })
-        .catch((error) => (
-          <Alert type="error" heading="User Not Found" headingLevel="h4">
-            {error}
-          </Alert>
-        ));
+        .catch((error) => {
+          setShowError(true);
+          console.log(error, "hi");
+        });
     } catch (error) {
       setFormInput(defaultFormInput);
       setShowPassword(false);
-      console.log(error);
     }
   };
   return (
     <>
-      <Form onSubmit={handleSubmit} large data-testid="custom-element">
-        <Fieldset legend="Sign In" legendStyle="large">
-          <span>
-            or <Link to={"/signup"}>Create an account</Link>
-          </span>
-          <Label htmlFor="email">Email</Label>
-          <TextInput
-            onChange={handleFormChange}
-            className="usa-input"
-            id="email"
-            name="email"
-            type="text"
-            autoCapitalize="off"
-            autoCorrect="off"
-          />
-          <Label htmlFor="password">Password</Label>
-          <TextInput
-            onChange={handleFormChange}
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-          />
-          <p className="usa-form__note">
-            <a
-              title="Show password"
-              //   href="javascript:void(0);"
-              className="usa-show-password"
-              aria-controls="password-sign-in"
-              onClick={handleToggle}
-            >
-              {showPassword ? "Hide password" : "Show password"}
-            </a>
-          </p>
+      <Card>
+        <Form onSubmit={handleSubmit} large data-testid="custom-element">
+          <Fieldset legend="Sign In" legendStyle="large">
+            <span>
+              or <Link to={"/signup"}>Create an account</Link>
+            </span>
+            <Label htmlFor="email">Email</Label>
+            <TextInput
+              onChange={handleFormChange}
+              className="usa-input"
+              id="email"
+              name="email"
+              type="text"
+              autoCapitalize="off"
+              autoCorrect="off"
+            />
+            <Label htmlFor="password">Password</Label>
+            <TextInput
+              onChange={handleFormChange}
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+            />
+            <p className="usa-form__note">
+              <a
+                title="Show password"
+                //   href="javascript:void(0);"
+                className="usa-show-password"
+                aria-controls="password-sign-in"
+                onClick={handleToggle}
+              >
+                {showPassword ? "Hide password" : "Show password"}
+              </a>
+            </p>
 
-          <Button type="submit">Sign in</Button>
-          <p>
-            <Button type="button" className="usa-button--base">
-              Google Sign In
-            </Button>
-          </p>
-          {/* <a
+            <Button type="submit">Sign in</Button>
+            <p>
+              <Button type="button" className="usa-button--base">
+                Google Sign In
+              </Button>
+            </p>
+            {/* <a
               className="usa-b"
               href="javascript:void(0);"
               title="Forgot password"
-            >
+              >
               Forgot password?
             </a> */}
-        </Fieldset>
-      </Form>
+          </Fieldset>
+        </Form>
+      </Card>
+      {showError && (
+        <Alert
+          type="error"
+          heading="User Not Found"
+          headingLevel="h4"
+          className="margin-1"
+        >
+          Wrong email or password
+        </Alert>
+      )}
     </>
   );
 }
