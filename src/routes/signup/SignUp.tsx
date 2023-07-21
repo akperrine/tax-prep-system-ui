@@ -5,9 +5,7 @@ import "./SignUp.css";
 function SignUp() {
   return (
     <div className="sign-up-container">
-      <Card>
-        <SignUpForm />
-      </Card>
+      <SignUpForm />
     </div>
   );
 }
