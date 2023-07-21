@@ -6,12 +6,12 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ILoginUserDTO } from "../../utils/interfaces";
-import { getUser } from "../../utils/api/userApi";
+import { Link, json, useNavigate } from "react-router-dom";
+import { ILoginUserDTO, IUser } from "../../utils/interfaces";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/userSlice";
 import { StateAbbreviation } from "../../utils/enums";
+import { getUser } from "../../utils/api/userApi";
 
 const defaultFormInput = {
   email: "",
@@ -39,27 +39,29 @@ function LoginForm() {
       ...formInput,
     };
     try {
-      // getUser(userPayload);
-      const mockReturn = {
-        id: 1,
-        firstName: "Austin",
-        lastName: "Perrine",
-        email: "a@p.com",
-        dob: "1993-03-17T05:00:00.000+00:00",
-        location: {
-          id: 1,
-          address: "123 way",
-          address2: null,
-          city: "Scottsdale",
-          state: StateAbbreviation.AZ,
-          zipcode: 11222,
-        },
-        appUserInformation: {
-          ssn: 123456789,
-          taxDocuments: [],
-        },
-      };
-      dispatch(setUser(mockReturn));
+      await getUser(userPayload)
+        .then((data) => dispatch(setUser(data)))
+        .catch((error) => console.log(error));
+      //   const mockReturn = {
+      //     id: 1,
+      //     firstName: "Austin",
+      //     lastName: "Perrine",
+      //     email: "a@p.com",
+      //     dob: "1993-03-17T05:00:00.000+00:00",
+      //     location: {
+      //       id: 1,
+      //       address: "123 way",
+      //       address2: null,
+      //       city: "Scottsdale",
+      //       state: StateAbbreviation.AZ,
+      //       zipcode: 11222,
+      //     },
+      //     appUserInformation: {
+      //       ssn: 123456789,
+      //       taxDocuments: [],
+      //     },
+      //   };
+      //   dispatch(setUser(mockReturn));
       setFormInput(defaultFormInput);
       setShowPassword(false);
       navigate("/");
