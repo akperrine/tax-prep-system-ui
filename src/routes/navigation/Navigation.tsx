@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./Navigation.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
 
 function Navigation() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Figure out the typing
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log(user);
   const navItems = [
     <Link className="nav-link" to={"/"}>
       Home
@@ -34,7 +39,7 @@ function Navigation() {
     <>
       <nav className="navbar">
         <img className="logo" src="src/assets/tax-prepped.png" alt="logo" />
-        {isLoggedIn && renderNavLinks()}
+        {user && renderNavLinks()}
       </nav>
       <Outlet />
     </>
