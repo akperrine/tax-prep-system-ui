@@ -12,11 +12,13 @@ export const getUser = async (userData: ILoginUserDTO) => {
 };
 
 export const addUser = async (newUserData: ISignUpUserDTO) => {
-  return await fetch("http://localhost:8080/user/register", {
+  const response = await await fetch("http://localhost:8080/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newUserData),
   });
+  const data = await response.json();
+  return data;
 };

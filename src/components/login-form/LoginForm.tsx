@@ -40,32 +40,14 @@ function LoginForm() {
     };
     try {
       await getUser(userPayload)
-        .then((data) => dispatch(setUser(data)))
+        .then((data) => {
+          dispatch(setUser(data));
+          navigate("/");
+        })
         .catch((error) => console.log(error));
-      //   const mockReturn = {
-      //     id: 1,
-      //     firstName: "Austin",
-      //     lastName: "Perrine",
-      //     email: "a@p.com",
-      //     dob: "1993-03-17T05:00:00.000+00:00",
-      //     location: {
-      //       id: 1,
-      //       address: "123 way",
-      //       address2: null,
-      //       city: "Scottsdale",
-      //       state: StateAbbreviation.AZ,
-      //       zipcode: 11222,
-      //     },
-      //     appUserInformation: {
-      //       ssn: 123456789,
-      //       taxDocuments: [],
-      //     },
-      //   };
-      //   dispatch(setUser(mockReturn));
+    } catch (error) {
       setFormInput(defaultFormInput);
       setShowPassword(false);
-      navigate("/");
-    } catch (error) {
       console.log(error);
     }
   };

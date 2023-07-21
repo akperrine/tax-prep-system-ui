@@ -6,8 +6,11 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ISignUpUserDTO } from "../../utils/interfaces";
+import { addUser } from "../../utils/api/userApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/userSlice";
 
 const defaultFormInput = {
   firstName: "",
@@ -19,6 +22,8 @@ const defaultFormInput = {
 function SignUpForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,7 +36,14 @@ function SignUpForm() {
       ...formInput,
     };
 
-    console.log(inventoryDataPayload);
+    try {
+      await addUser(inventoryDataPayload).then((data) => {
+        dispatch(setUser(data));
+        navigate("/");
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleToggle = () => setShowPassword(!showPassword);
@@ -40,7 +52,6 @@ function SignUpForm() {
       <Form onSubmit={handleSubmit} large data-testid="custom-element">
         <Fieldset legend="Sign Up" legendStyle="large">
           <span>
-            {/* or <a href="../login">Already have an account?</a> */}
             or <Link to={"/login"}>Already have an account?</Link>
           </span>
           <Label htmlFor="firstName">First Name</Label>
