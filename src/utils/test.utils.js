@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
+import userReducer from "../redux/slices/userSlice";
 
 export function renderWithProviders(
   ui,
@@ -16,7 +17,7 @@ export function renderWithProviders(
   } = {}
 ) {
   function Wrapper({ children }) {
-    return <Provider store={store}></Provider>;
+    return <Provider store={store}>{children}</Provider>;
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };

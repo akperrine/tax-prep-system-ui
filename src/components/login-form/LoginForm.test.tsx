@@ -10,15 +10,34 @@ import {
 import LoginForm from "./LoginForm";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
+import { renderWithProviders } from "../../utils/test.utils";
 
 describe("Login Component", () => {
+  const testDataEmpty = null;
+  const testData = {
+    id: 1,
+    firstName: "Austin",
+    lastName: "Perrine",
+    email: "a@p.com",
+    dob: null,
+    ssn: null,
+    location: null,
+    appUserInformation: {
+      id: 1,
+      taxDocuments: [],
+    },
+  };
   it("should render", () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <LoginForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          user: testDataEmpty,
+        },
+      }
     );
-
     const emailLabel = screen.getByLabelText("Email");
     const passwordLabel = screen.getByLabelText("Password");
     const emailInput = screen.getByLabelText("Email");
@@ -31,11 +50,16 @@ describe("Login Component", () => {
     expect(passwordInput).toBeInTheDocument();
     expect(signInButton).toBeInTheDocument();
   });
-  it("should submit email and password", async () => {
-    const { getByLabelText, getByRole } = render(
+  it("should update email and password", async () => {
+    const { getByLabelText, getByRole } = renderWithProviders(
       <MemoryRouter>
         <LoginForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          user: testDataEmpty,
+        },
+      }
     );
 
     // Find input fields and submit button
@@ -60,27 +84,23 @@ describe("Login Component", () => {
     expect(passwordInput.value).toBe("testpassword");
   });
   it("toggles password visibility", () => {
-    const { getByText, getByLabelText } = render(
+    const { getByText, getByLabelText } = renderWithProviders(
       <MemoryRouter>
         <LoginForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          user: testDataEmpty,
+        },
+      }
     );
     const passwordInput = getByLabelText(/password/i);
     const showPasswordButton = getByText(/show password/i);
 
-    // Initially, the password input type should be "password"
     expect(passwordInput.type).toBe("password");
-
-    // Click on the "Show password" link
     fireEvent.click(showPasswordButton);
-
-    // After clicking, the password input type should be "text"
     expect(passwordInput.type).toBe("text");
-
-    // Click on the "Hide password" link
     fireEvent.click(showPasswordButton);
-
-    // After clicking again, the password input type should be "password"
     expect(passwordInput.type).toBe("password");
   });
 });
