@@ -7,6 +7,11 @@ export const getUser = async (userData: ILoginUserDTO) => {
     },
     body: JSON.stringify(userData),
   });
+  console.log(response.ok);
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
   const data = await response.json();
   return data;
 };
@@ -19,6 +24,10 @@ export const addUser = async (newUserData: ISignUpUserDTO) => {
     },
     body: JSON.stringify(newUserData),
   });
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
   const data = await response.json();
   return data;
 };

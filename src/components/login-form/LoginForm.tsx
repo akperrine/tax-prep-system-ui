@@ -24,8 +24,10 @@ function LoginForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log(typeof errorMessage);
 
   const handleToggle = () => setShowPassword((showPassword) => !showPassword);
 
@@ -49,7 +51,7 @@ function LoginForm() {
         })
         .catch((error) => {
           setShowError(true);
-          console.log(error, "hi");
+          setErrorMessage(error.message);
         });
     } catch (error) {
       setFormInput(defaultFormInput);
@@ -70,9 +72,10 @@ function LoginForm() {
               className="usa-input"
               id="email"
               name="email"
-              type="text"
+              type="email"
               autoCapitalize="off"
               autoCorrect="off"
+              required
             />
             <Label htmlFor="password">Password</Label>
             <TextInput
@@ -80,6 +83,7 @@ function LoginForm() {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
+              required
             />
             <p className="usa-form__note">
               <a
@@ -116,7 +120,7 @@ function LoginForm() {
           headingLevel="h4"
           className="margin-1"
         >
-          Wrong email or password
+          {errorMessage ? errorMessage : "Sorry, something went wrong."}
         </Alert>
       )}
     </>

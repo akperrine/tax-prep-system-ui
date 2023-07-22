@@ -25,6 +25,7 @@ function SignUpForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ function SignUpForm() {
       });
     } catch (error) {
       setShowError(true);
+      setErrorMessage(error.message);
     }
   };
 
@@ -67,6 +69,7 @@ function SignUpForm() {
               type="text"
               autoCapitalize="off"
               autoCorrect="off"
+              required
             />
             <Label htmlFor="lastName">Last Name</Label>
             <TextInput
@@ -77,6 +80,7 @@ function SignUpForm() {
               type="text"
               autoCapitalize="off"
               autoCorrect="off"
+              required
             />
             <Label htmlFor="email">Email</Label>
             <TextInput
@@ -84,9 +88,10 @@ function SignUpForm() {
               className="usa-input"
               id="email"
               name="email"
-              type="text"
+              type="email"
               autoCapitalize="off"
               autoCorrect="off"
+              required
             />
             <Label htmlFor="password">Password</Label>
             <TextInput
@@ -94,6 +99,8 @@ function SignUpForm() {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
+              pattern=".{6,}"
+              title="password must be at least 6 characters"
             />
             <p className="usa-form__note">
               <a
@@ -107,10 +114,10 @@ function SignUpForm() {
               </a>
             </p>
 
-            <Button type="submit">Sign in</Button>
+            <Button type="submit">Sign up</Button>
             <p>
               <Button type="button" className="usa-button--base">
-                Google Sign In
+                Sign Up With Google
               </Button>
             </p>
           </Fieldset>
@@ -123,7 +130,7 @@ function SignUpForm() {
           headingLevel="h4"
           className="margin-1"
         >
-          User already exists
+          {errorMessage ? errorMessage : "Sorry, something went wrong."}
         </Alert>
       )}
     </>
