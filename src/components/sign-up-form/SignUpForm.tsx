@@ -130,7 +130,9 @@ function SignUpForm() {
           headingLevel="h4"
           className="margin-1"
         >
-          {errorMessage ? errorMessage : "Sorry, something went wrong."}
+          {errorMessage == "User Exists"
+            ? "User already exists with this email"
+            : "Sorry, something went wrong."}
         </Alert>
       )}
     </>
