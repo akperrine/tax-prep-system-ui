@@ -1,0 +1,239 @@
+import {
+  Alert,
+  Button,
+  Dropdown,
+  Fieldset,
+  Form,
+  Label,
+  TextInput,
+} from "@trussworks/react-uswds";
+import { useState } from "react";
+import "./Profile.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
+function Profile() {
+  const user = useSelector((state: RootState) => state.user.user);
+  const [formData, setFormData] = useState({
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.email,
+    dob: "",
+    ssn: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  });
+  const [noLocation, setNoLocation] = useState(false);
+
+  let year = 1995;
+  let month = 1;
+  let day = 22;
+  let date = new Date(year, month - 1, day);
+  let ISODate = date.toISOString();
+  console.log(date, ISODate);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can perform form submission or other actions here with formData
+    console.log(formData);
+  };
+
+  return (
+    <div className="profile-container">
+      {/* {states.map((state, index) => (
+            <option key={index} value={state}>
+              {state}
+            </option>
+          ))} */}
+      <h2>Personal Information</h2>
+      {noLocation && (
+        <Alert type="warning" headingLevel="h4" className="margin-1" noIcon>
+          We're missing some information
+        </Alert>
+      )}
+
+      <Form onSubmit={handleSubmit} large className="profile-form-container">
+        <div className="profile-fieldset-container">
+          <Fieldset legendStyle="large" className="profile-fieldset">
+            <Label htmlFor="firstName">First name</Label>
+            <TextInput
+              id="firstName"
+              name="firstName"
+              type="text"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+            <Label htmlFor="lastName">Last name</Label>
+            <TextInput
+              id="lastName"
+              name="lastName"
+              type="text"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+            <Label htmlFor="email">Email:</Label>
+            <TextInput
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <Label htmlFor="dob">Date of Birth (mm/dd/yyyy):</Label>
+            <TextInput
+              type="text"
+              name="dob"
+              id="dob"
+              value={formData.dob}
+              onChange={handleChange}
+              required
+            />
+            <Label htmlFor="ssn">SSN:</Label>
+            <TextInput
+              type="text"
+              name="ssn"
+              id="ssn"
+              value={formData.ssn}
+              onChange={handleChange}
+              required
+            />
+          </Fieldset>
+          <Fieldset legendStyle="large" className="profile-fieldset">
+            <Label htmlFor="address1">Street address 1</Label>
+            <TextInput
+              id="address1"
+              name="address1"
+              type="text"
+              value={formData.address1}
+              onChange={handleChange}
+              required
+            />
+
+            <Label htmlFor="address2" hint=" (optional)">
+              Street address 2
+            </Label>
+            <TextInput
+              id="address2"
+              name="address2"
+              type="text"
+              value={formData.address2}
+              onChange={handleChange}
+            />
+
+            <div className="grid-row grid-gap">
+              <div className="mobile-lg:grid-col-6">
+                <Label htmlFor="city">City</Label>
+                <TextInput
+                  id="city"
+                  name="city"
+                  type="text"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mobile-lg:grid-col-6">
+                <Label htmlFor="state">State</Label>
+                <Dropdown
+                  id="state"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                >
+                  <option>- -</option>
+                  <option value="AL">Alabama</option>
+                  <option value="AK">Alaska</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option>
+                  <option value="CA">California</option>
+                  <option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="DE">Delaware</option>
+                  <option value="DC">District of Columbia</option>
+                  <option value="FL">Florida</option>
+                  <option value="GA">Georgia</option>
+                  <option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option>
+                  <option value="IL">Illinois</option>
+                  <option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
+                  <option value="AA">AA - Armed Forces Americas</option>
+                  <option value="AE">AE - Armed Forces Africa</option>
+                  <option value="AE">AE - Armed Forces Canada</option>
+                  <option value="AE">AE - Armed Forces Europe</option>
+                  <option value="AE">AE - Armed Forces Middle East</option>
+                  <option value="AP">AP - Armed Forces Pacific</option>
+                </Dropdown>
+              </div>
+            </div>
+
+            <Label htmlFor="zipcode">ZIP</Label>
+            <TextInput
+              type="text"
+              name="zipcode"
+              id="zipcode"
+              inputSize="medium"
+              pattern="[\d]{5}(-[\d]{4})?"
+              value={formData.zipcode}
+              onChange={handleChange}
+              required
+            />
+          </Fieldset>
+        </div>
+        <Button>Submit</Button>
+      </Form>
+    </div>
+  );
+}
+
+export default Profile;

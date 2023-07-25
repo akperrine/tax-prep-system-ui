@@ -4,20 +4,10 @@ import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 function Home() {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
-  // useEffect(() => {
-  if (user == null) {
-    console.log("it is null");
-    redirect("/login");
-  }
-  // });
-  // const navigate = useNavigate();
-  // console.log(user);
-  // if (user == null) {
-  //   navigate("/login");
-  // }
 
   return (
     <div className="home-container">

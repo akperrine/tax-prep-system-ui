@@ -27,7 +27,6 @@ function LoginForm() {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(typeof errorMessage);
 
   const handleToggle = () => setShowPassword((showPassword) => !showPassword);
 

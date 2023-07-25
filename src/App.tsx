@@ -1,11 +1,11 @@
-import { Route, Routes, redirect, useNavigate } from "react-router-dom";
+import { Outlet, Route, Routes, redirect, useNavigate } from "react-router-dom";
 import "./App.css";
 import Navigation from "./routes/navigation/Navigation";
 import Home from "./routes/home/Home";
 import TaxFile from "./routes/TaxFile";
 import TaxView from "./routes/TaxView";
 import Login from "./routes/login/Login";
-import Profile from "./routes/Profile";
+import Profile from "./routes/profile/Profile";
 import SignUp from "./routes/signup/SignUp";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -23,27 +23,37 @@ function App() {
   //   }
   // });
   return (
-    <>
+    <div className="app-container">
       {user ? (
-        <Routes>
-          <Route path="/" element={<Navigation />}>
-            <Route index element={<Home />} />
-            {/* <Route path="/login" element={<Login />} /> */}
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/file" element={<TaxFile />} />
-            <Route path="/display" element={<TaxView />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-        </Routes>
+        <>
+          <Navigation />
+          <div className="outlet-container">
+            <Routes>
+              <Route path="/" element={<Outlet />}>
+                <Route index element={<Home />} />
+                {/* <Route path="/login" element={<Login />} /> */}
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/file" element={<TaxFile />} />
+                <Route path="/display" element={<TaxView />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
+            </Routes>
+          </div>
+        </>
       ) : (
-        <Routes>
-          <Route path="/" element={<Navigation />}>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Route>
-        </Routes>
+        <>
+          <Navigation />
+          <div className="outlet-container">
+            <Routes>
+              <Route path="/" element={<Outlet />}>
+                <Route path="/" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+              </Route>
+            </Routes>
+          </div>
+        </>
       )}
-    </>
+    </div>
   );
 }
 

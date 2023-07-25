@@ -1,0 +1,21 @@
+.profile-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form-container > .usa-button {
+  width: fit-content;
+}
+
+.profile-fieldset-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-fieldset-container > .usa-fieldset {
+  margin-right: 10px;
+}
+
+.profile-fieldset {
+  min-width: 200px;
+}

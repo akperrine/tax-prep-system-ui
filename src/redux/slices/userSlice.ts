@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IUser, IUserState } from "../../utils/interfaces";
+import { ILocation, IUser, IUserState } from "../../utils/interfaces";
 
 const initialState: IUserState = {
   user: null,
@@ -13,8 +13,12 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
     clearUser: (state) => {
-      console.log("fires");
       state.user = null;
+    },
+    updateLocation: (state, action: PayloadAction<ILocation>) => {
+      if (state.user) {
+        state.user.location = action.payload;
+      }
     },
   },
 });
