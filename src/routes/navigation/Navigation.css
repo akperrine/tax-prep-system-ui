@@ -6,11 +6,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 9.5vh;
+  height: 100px;
 }
 
 .navbar > img {
-  height: 100px;
+  height: 145%;
   margin: 25px;
 }
 

@@ -26,7 +26,7 @@ export interface ILocation {
   id?: number;
   address: string;
   address2: string | null;
-  city: String;
+  city: string;
   state: string;
   zipcode: number;
 }

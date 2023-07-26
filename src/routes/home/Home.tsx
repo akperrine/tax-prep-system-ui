@@ -11,7 +11,7 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h2>Welcome User</h2>
+      <h2>Welcome {user?.firstName}</h2>
       <div>Let's get you ready for tax season!</div>
       <ButtonGroup>
         <Button type="button" className="usa-button--accent-cooly">

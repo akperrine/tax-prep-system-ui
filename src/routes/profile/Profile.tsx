@@ -41,6 +41,26 @@ function Profile() {
   useEffect(() => {
     if (user?.location !== null) {
       setNoLocation(false);
+      const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
+      const userYear = yearMonthDay[0];
+      const userMonth = yearMonthDay[1];
+      const userDay = yearMonthDay[2];
+
+      console.log(yearMonthDay[0]);
+      setFormData({
+        ...formData,
+        day: userDay,
+        month: userMonth,
+        year: userYear,
+        ssn: user?.ssn!,
+        address1: user?.location?.address!,
+        city: user?.location?.city!,
+        state: user?.location?.state!,
+        zipcode: user?.location?.zipcode.toString()!,
+      });
+      if (user?.location?.address2) {
+        setFormData({ ...formData, address2: user.location.address2 });
+      }
     }
   }, [user]);
 
@@ -84,7 +104,8 @@ function Profile() {
     if (!isValidDate) {
       setInvalidDate(true);
     } else {
-      let date = new Date(day, month - 1, year);
+      let date = new Date(year, month - 1, day);
+      console.log(date);
       let ISODate = date.toISOString();
       if (user) {
         const userDTO: IUser = {
@@ -162,6 +183,7 @@ function Profile() {
                 name="month"
                 label="Month"
                 unit="month"
+                value={formData.month}
                 maxLength={2}
                 minLength={1}
                 onChange={handleChange}
@@ -171,6 +193,7 @@ function Profile() {
                 name="day"
                 label="Day"
                 unit="day"
+                value={formData.day}
                 maxLength={2}
                 minLength={1}
                 onChange={handleChange}
@@ -180,6 +203,7 @@ function Profile() {
                 name="year"
                 label="Year"
                 unit="year"
+                value={formData.year}
                 maxLength={4}
                 minLength={4}
                 onChange={handleChange}
