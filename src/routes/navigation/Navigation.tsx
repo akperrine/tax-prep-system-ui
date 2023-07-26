@@ -10,7 +10,6 @@ function Navigation() {
   // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
-  console.log(user);
 
   const handleSignOut = () => dispatch(clearUser());
 

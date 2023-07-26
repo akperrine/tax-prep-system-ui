@@ -23,16 +23,15 @@ export interface IUserState {
 }
 
 export interface ILocation {
-  id: number;
+  id?: number;
   address: string;
   address2: string | null;
   city: String;
-  state: StateAbbreviation;
+  state: string;
   zipcode: number;
 }
 
 export interface IAppUserInformation {
-  ssn: number;
   taxDocuments: string[];
 }
 
@@ -43,4 +42,6 @@ export interface IUser {
   email: string;
   dob: string;
   location: ILocation;
+  ssn: string;
+  taxInformation?: IAppUserInformation;
 }

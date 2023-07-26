@@ -9,13 +9,18 @@ import {
   Label,
   TextInput,
 } from "@trussworks/react-uswds";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Profile.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { updateUser } from "../../utils/api/userApi";
+import { IUser } from "../../utils/interfaces";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/userSlice";
 
 function Profile() {
   const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: user?.firstName,
     lastName: user?.lastName,
@@ -33,6 +38,12 @@ function Profile() {
   const [noLocation, setNoLocation] = useState(true);
   const [invalidDate, setInvalidDate] = useState(false);
 
+  useEffect(() => {
+    if (user?.location !== null) {
+      setNoLocation(false);
+    }
+  }, [user]);
+
   const validateDate = (day: number, month: number, year: number): boolean => {
     const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
     // check valid month
@@ -40,18 +51,15 @@ function Profile() {
     //check not more days than a month
     // more than 31
     if (monthsWith31Days.includes(month) && day > 31) {
-      console.log("more than 31");
       return false;
+      // Check days in Feb
     } else if (month == 2 && day > 28) {
-      console.log("feb");
       return false;
+      // Check days with only 30 days
     } else if (day > 30) {
-      console.log("more than 30");
       return false;
     }
     return true;
-    // more than 30
-    // more than 28 for Feb
   };
 
   const handleChange = (e) => {
@@ -62,12 +70,15 @@ function Profile() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInvalidDate(false);
     const day = parseInt(formData.day);
     const month = parseInt(formData.month);
     const year = parseInt(formData.year);
+    const address2 = formData.address2 === "" ? null : formData.address2;
+    const social = formData.ssn.replace(/\-/g, "");
+    console.log(address2);
 
     const isValidDate = validateDate(day, month, year);
     if (!isValidDate) {
@@ -75,7 +86,27 @@ function Profile() {
     } else {
       let date = new Date(day, month - 1, year);
       let ISODate = date.toISOString();
-      console.log(date, ISODate);
+      if (user) {
+        const userDTO: IUser = {
+          id: user.id,
+          firstName: formData.firstName!,
+          lastName: formData.lastName!,
+          email: formData.email!,
+          dob: ISODate,
+          ssn: social,
+          location: {
+            address: formData.address1!,
+            address2: address2,
+            city: formData.city,
+            state: formData.state!,
+            zipcode: parseInt(formData.zipcode)!,
+          },
+        };
+        console.log(userDTO);
+        const response = await updateUser(userDTO);
+        console.log(response);
+        dispatch(setUser(response));
+      }
     }
   };
 
@@ -132,7 +163,7 @@ function Profile() {
                 label="Month"
                 unit="month"
                 maxLength={2}
-                minLength={2}
+                minLength={1}
                 onChange={handleChange}
               />
               <DateInput
@@ -141,7 +172,7 @@ function Profile() {
                 label="Day"
                 unit="day"
                 maxLength={2}
-                minLength={2}
+                minLength={1}
                 onChange={handleChange}
               />
               <DateInput
