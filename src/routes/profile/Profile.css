@@ -19,3 +19,7 @@
 .profile-fieldset {
   min-width: 200px;
 }
+
+.profile-alert-container {
+  display: flex;
+}

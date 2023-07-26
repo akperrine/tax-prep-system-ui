@@ -1,6 +1,8 @@
 import {
   Alert,
   Button,
+  DateInput,
+  DateInputGroup,
   Dropdown,
   Fieldset,
   Form,
@@ -18,7 +20,9 @@ function Profile() {
     firstName: user?.firstName,
     lastName: user?.lastName,
     email: user?.email,
-    dob: "",
+    day: "",
+    month: "",
+    year: "",
     ssn: "",
     address1: "",
     address2: "",
@@ -26,14 +30,29 @@ function Profile() {
     state: "",
     zipcode: "",
   });
-  const [noLocation, setNoLocation] = useState(false);
+  const [noLocation, setNoLocation] = useState(true);
+  const [invalidDate, setInvalidDate] = useState(false);
 
-  let year = 1995;
-  let month = 1;
-  let day = 22;
-  let date = new Date(year, month - 1, day);
-  let ISODate = date.toISOString();
-  console.log(date, ISODate);
+  const validateDate = (day: number, month: number, year: number): boolean => {
+    const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
+    // check valid month
+    if (month > 12) return false;
+    //check not more days than a month
+    // more than 31
+    if (monthsWith31Days.includes(month) && day > 31) {
+      console.log("more than 31");
+      return false;
+    } else if (month == 2 && day > 28) {
+      console.log("feb");
+      return false;
+    } else if (day > 30) {
+      console.log("more than 30");
+      return false;
+    }
+    return true;
+    // more than 30
+    // more than 28 for Feb
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,26 +62,38 @@ function Profile() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // You can perform form submission or other actions here with formData
-    console.log(formData);
+    setInvalidDate(false);
+    const day = parseInt(formData.day);
+    const month = parseInt(formData.month);
+    const year = parseInt(formData.year);
+
+    const isValidDate = validateDate(day, month, year);
+    if (!isValidDate) {
+      setInvalidDate(true);
+    } else {
+      let date = new Date(day, month - 1, year);
+      let ISODate = date.toISOString();
+      console.log(date, ISODate);
+    }
   };
 
   return (
     <div className="profile-container">
-      {/* {states.map((state, index) => (
-            <option key={index} value={state}>
-              {state}
-            </option>
-          ))} */}
       <h2>Personal Information</h2>
-      {noLocation && (
-        <Alert type="warning" headingLevel="h4" className="margin-1" noIcon>
-          We're missing some information
-        </Alert>
-      )}
-
+      <div className="profile-alert-container">
+        {noLocation && (
+          <Alert type="warning" headingLevel="h4" className="margin-1" noIcon>
+            We're missing some information
+          </Alert>
+        )}
+        {invalidDate && (
+          <Alert type="error" headingLevel="h4" className="margin-1" noIcon>
+            Invalid Date
+          </Alert>
+        )}
+      </div>
       <Form onSubmit={handleSubmit} large className="profile-form-container">
         <div className="profile-fieldset-container">
           <Fieldset legendStyle="large" className="profile-fieldset">
@@ -94,14 +125,35 @@ function Profile() {
               required
             />
             <Label htmlFor="dob">Date of Birth (mm/dd/yyyy):</Label>
-            <TextInput
-              type="text"
-              name="dob"
-              id="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              required
-            />
+            <DateInputGroup>
+              <DateInput
+                id="testDateInput"
+                name="month"
+                label="Month"
+                unit="month"
+                maxLength={2}
+                minLength={2}
+                onChange={handleChange}
+              />
+              <DateInput
+                id="testDateInput"
+                name="day"
+                label="Day"
+                unit="day"
+                maxLength={2}
+                minLength={2}
+                onChange={handleChange}
+              />
+              <DateInput
+                id="testDateInput"
+                name="year"
+                label="Year"
+                unit="year"
+                maxLength={4}
+                minLength={4}
+                onChange={handleChange}
+              />
+            </DateInputGroup>
             <Label htmlFor="ssn">SSN:</Label>
             <TextInput
               type="text"
@@ -230,7 +282,9 @@ function Profile() {
             />
           </Fieldset>
         </div>
-        <Button>Submit</Button>
+        <Button type="submit" size="big">
+          Submit
+        </Button>
       </Form>
     </div>
   );
