@@ -7,9 +7,9 @@ import { IUser, IUserState } from "../utils/interfaces";
 function Profile() {
   const user = useSelector((state: RootState) => state.user.user);
   const [formData, setFormData] = useState<IUser>({
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    email: user?.email,
+    firstName: user?.firstName!,
+    lastName: user?.lastName!,
+    email: user?.email!,
     day: "",
     month: "",
     year: "",
@@ -36,6 +36,7 @@ function Profile() {
         setFormData={setFormData}
         handleChange={handleChange}
         hiddenSubmit={false}
+        formHeading="User Profile"
       />
     </>
   );
