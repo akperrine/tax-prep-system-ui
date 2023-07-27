@@ -3,6 +3,7 @@ import ProfileForm from "../components/profile-form/ProfileForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import FileStart from "../components/file-start/FileStart";
+import { Button, ButtonGroup } from "@trussworks/react-uswds";
 
 function TaxFile() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -21,7 +22,7 @@ function TaxFile() {
     zipcode: "",
   });
   const [taxFormData, setTaxFormData] = useState({});
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [readyToFile, setReadyToFile] = useState(false);
 
   const prevStep = () => setStep(step - 1);
@@ -37,16 +38,34 @@ function TaxFile() {
     }));
   };
 
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <ProfileForm
+            formData={profileFormData}
+            setFormData={setProfileFormData}
+            hiddenSubmit={true}
+            handleChange={(e) => handleChange(e, setProfileFormData)}
+            formHeading={"Please complete and verify"}
+          />
+        );
+      default:
+    }
+  };
+
   return (
     <>
       {readyToFile ? (
-        <ProfileForm
-          formData={profileFormData}
-          setFormData={setProfileFormData}
-          hiddenSubmit={true}
-          handleChange={(e) => handleChange(e, setProfileFormData)}
-          formHeading={"Please complete and verify"}
-        />
+        <div>
+          {renderStep()}
+          <ButtonGroup type="default" className="margin-3">
+            <Button type="button" disabled={step === 1}>
+              Back
+            </Button>
+            <Button type="button">Continue</Button>
+          </ButtonGroup>
+        </div>
       ) : (
         <FileStart handleClick={handleReadyToFileClick} />
       )}
