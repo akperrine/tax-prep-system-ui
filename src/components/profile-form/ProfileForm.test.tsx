@@ -1,5 +1,5 @@
 import { MemoryRouter } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "./ProfileForm";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { renderWithProviders } from "../../utils/test.utils";
 

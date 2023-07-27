@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { ChangeEvent, useEffect, useState } from "react";
-import "./Profile.css";
+import "./ProfileForm.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateUser } from "../../utils/api/userApi";
@@ -18,23 +18,9 @@ import { IUser } from "../../utils/interfaces";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/userSlice";
 
-function Profile() {
+function ProfileForm({ formData, setFormData, handleChange, hiddenSubmit }) {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    email: user?.email,
-    day: "",
-    month: "",
-    year: "",
-    ssn: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zipcode: "",
-  });
   const [noLocation, setNoLocation] = useState(false);
   const [invalidDate, setInvalidDate] = useState(false);
   const [visibleToast, setVisibleToast] = useState(false);
@@ -86,14 +72,6 @@ function Profile() {
     return true;
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInvalidDate(false);
@@ -140,7 +118,7 @@ function Profile() {
   };
 
   return (
-    <div className="profile-container">
+    <div className="profileForm-container">
       <div
         className={`profile-update-notification ${
           visibleToast ? "visible" : ""
@@ -358,12 +336,20 @@ function Profile() {
             />
           </Fieldset>
         </div>
-        <Button type="submit" size="big">
+      </Form>
+      {!hiddenSubmit && (
+        <Button
+          form="profile-form-container"
+          type="submit"
+          size="big"
+          className="margin-3"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
-      </Form>
+      )}
     </div>
   );
 }
 
-export default Profile;
+export default ProfileForm;

@@ -5,7 +5,7 @@ import Home from "./routes/home/Home";
 import TaxFile from "./routes/TaxFile";
 import TaxView from "./routes/TaxView";
 import Login from "./routes/login/Login";
-import Profile from "./routes/profile/Profile";
+import Profile from "./routes/Profile";
 import SignUp from "./routes/signup/SignUp";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
