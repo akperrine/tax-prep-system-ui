@@ -9,7 +9,7 @@ import {
   Label,
   TextInput,
 } from "@trussworks/react-uswds";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "./Profile.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -35,11 +35,14 @@ function Profile() {
     state: "",
     zipcode: "",
   });
-  const [noLocation, setNoLocation] = useState(true);
+  const [noLocation, setNoLocation] = useState(false);
   const [invalidDate, setInvalidDate] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
 
   useEffect(() => {
-    if (user?.location !== null) {
+    if (user?.location === null) {
+      setNoLocation(true);
+    } else {
       setNoLocation(false);
       const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
       const userYear = yearMonthDay[0];
@@ -66,6 +69,8 @@ function Profile() {
 
   const validateDate = (day: number, month: number, year: number): boolean => {
     const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
+    // no negative numbers
+    if (day < 0 || month < 0 || year < 1900) return false;
     // check valid month
     if (month > 12) return false;
     //check not more days than a month
@@ -82,7 +87,7 @@ function Profile() {
     return true;
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -123,16 +128,35 @@ function Profile() {
             zipcode: parseInt(formData.zipcode)!,
           },
         };
-        console.log(userDTO);
-        const response = await updateUser(userDTO);
-        console.log(response);
-        dispatch(setUser(response));
+        try {
+          const response = await updateUser(userDTO);
+          dispatch(setUser(response));
+          setVisibleToast(true);
+          setTimeout(() => {
+            setVisibleToast(false);
+          }, 3000);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
 
   return (
     <div className="profile-container">
+      <div
+        className={`profile-update-notification ${
+          visibleToast ? "visible" : ""
+        }`}
+      >
+        <Alert
+          type="success"
+          heading="Profile Updated"
+          headingLevel="h4"
+          className="margin-3 toast hide"
+        ></Alert>
+      </div>
+
       <h2>Personal Information</h2>
       <div className="profile-alert-container">
         {noLocation && (
