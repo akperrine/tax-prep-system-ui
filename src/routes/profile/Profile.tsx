@@ -49,7 +49,6 @@ function Profile() {
       const userMonth = yearMonthDay[1];
       const userDay = yearMonthDay[2];
 
-      console.log(yearMonthDay[0]);
       setFormData({
         ...formData,
         day: userDay,
@@ -103,14 +102,12 @@ function Profile() {
     const year = parseInt(formData.year);
     const address2 = formData.address2 === "" ? null : formData.address2;
     const social = formData.ssn.replace(/\-/g, "");
-    console.log(address2);
 
     const isValidDate = validateDate(day, month, year);
     if (!isValidDate) {
       setInvalidDate(true);
     } else {
       let date = new Date(year, month - 1, day);
-      console.log(date);
       let ISODate = date.toISOString();
       if (user) {
         const userDTO: IUser = {
@@ -153,7 +150,7 @@ function Profile() {
           type="success"
           heading="Profile Updated"
           headingLevel="h4"
-          className="margin-3 toast hide"
+          className="margin-3"
         ></Alert>
       </div>
 

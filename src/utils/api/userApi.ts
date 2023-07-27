@@ -7,7 +7,6 @@ export const getUser = async (userData: ILoginUserDTO) => {
     },
     body: JSON.stringify(userData),
   });
-  console.log(response.ok);
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
@@ -33,7 +32,6 @@ export const addUser = async (newUserData: ISignUpUserDTO) => {
 };
 
 export const updateUser = async (userData: IUser): Promise<IUser> => {
-  console.log(`http://localhost:8080/user/id/${userData.id}`);
   const response = await await fetch(
     `http://localhost:8080/user/id/${userData.id}`,
     {
