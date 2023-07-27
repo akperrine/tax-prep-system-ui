@@ -1,0 +1,40 @@
+.profile-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form-container > .usa-button {
+  width: fit-content;
+}
+
+.profile-fieldset-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-fieldset-container > .usa-fieldset {
+  margin-right: 10px;
+}
+
+.profile-fieldset {
+  min-width: 200px;
+}
+
+.profile-alert-container {
+  display: flex;
+}
+
+.profile-update-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 5px;
+  opacity: 0;
+  animation: slide-in 0.5s ease-out forwards;
+  z-index: 100;
+}
+
+.profile-update-notification.visible {
+  transition: opacity 1.5s ease-in-out;
+  opacity: 1;
+}

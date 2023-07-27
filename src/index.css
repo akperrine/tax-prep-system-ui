@@ -1,3 +1,5 @@
+/* @import "bootstrap/dist/css/bootstrap.min.css"; */
+
 :root {
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -6,11 +8,10 @@
   --secondary-color: #0078ae;
   --accent-color: #5a5b5d;
   --text-color: #000000;
-  --background: #f8f8f8;
+  --background: #fff;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: var(--text-color);
-  background-color: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,14 +24,28 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0px;
+  /* background-color: var(--background); */
+  /* min-height: 100vh; */
 }
 
 body {
   margin: 0;
   padding: 0px;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  /* place-items: center; */
+  /* min-width: 320px; */
+  /* min-height: 100vh; */
+}
+
+ol {
+  list-style-type: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+li {
+  list-style-type: none;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 a {
@@ -42,7 +57,6 @@ a:visited {
   color: inherit;
 }
 
-/* Remove link color and underline on hover (optional) */
 a:hover {
   color: inherit;
   text-decoration: underline;
