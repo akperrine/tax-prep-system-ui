@@ -28,7 +28,6 @@ function FilingStatus({ formData, setFormData }) {
           label="Jointly"
           checked={selected === FilingStatusOptions.MARRIED_FILING_JOINTLY}
           onChange={handleClick}
-          defaultChecked
         />
       </div>
     </>
