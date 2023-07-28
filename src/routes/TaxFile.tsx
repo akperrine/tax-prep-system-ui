@@ -35,10 +35,21 @@ function TaxFile() {
   const [taxFormData, setTaxFormData] = useState({
     filingStatus: "",
     w2Income: "",
-    w2Location: "",
+    w2witheld: "",
+    w2Address1: "",
+    w2Address2: "",
+    w2City: "",
+    w2State: "",
+    w2Zipcode: "",
     ten99Income: "",
-    ten99Location: "",
+    Ten99witheld: "",
+    Ten99Address1: "",
+    Ten99Address2: "",
+    Ten99City: "",
+    Ten99State: "",
+    Ten99Zipcode: "",
   });
+  console.log(taxFormData);
   const [step, setStep] = useState(1);
   const [readyToFile, setReadyToFile] = useState(false);
 
@@ -72,11 +83,28 @@ function TaxFile() {
           <FilingStatus formData={taxFormData} setFormData={setTaxFormData} />
         );
       case 3:
-        return <W2Form />;
+        return (
+          <W2Form
+            formData={taxFormData}
+            setFormData={setTaxFormData}
+            handleChange={(e) => handleChange(e, setTaxFormData)}
+          />
+        );
       case 4:
-        return <Ten99From />;
+        return (
+          <Ten99From
+            formData={taxFormData}
+            setFormData={setTaxFormData}
+            handleChange={(e) => handleChange(e, setTaxFormData)}
+          />
+        );
       case 5:
-        return <ReviewFile />;
+        return (
+          <ReviewFile
+          // profileFormData={profileFormData}
+          // taxFormData={taxFormData}
+          />
+        );
       default:
     }
   };

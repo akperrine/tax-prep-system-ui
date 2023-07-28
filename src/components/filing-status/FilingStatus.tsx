@@ -1,15 +1,20 @@
 import { Radio } from "@trussworks/react-uswds";
 import { FilingStatusOptions } from "../../utils/enums";
 import "./FilingStatus.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function FilingStatus({ formData, setFormData }) {
-  console.log(formData);
   const [selected, setSelected] = useState("none");
+
   const handleClick = (e) => {
     setSelected(e.target.name);
     setFormData({ ...formData, filingStatus: e.target.name });
   };
+
+  useEffect(() => {
+    setSelected(formData.filingStatus);
+  }, []);
+
   return (
     <>
       <h2>Filing Status</h2>
