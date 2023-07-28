@@ -3,7 +3,18 @@ import ProfileForm from "../components/profile-form/ProfileForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import FileStart from "../components/file-start/FileStart";
-import { Button, ButtonGroup } from "@trussworks/react-uswds";
+import {
+  Button,
+  ButtonGroup,
+  PrimaryNav,
+  ProcessList,
+  ProcessListHeading,
+  ProcessListItem,
+} from "@trussworks/react-uswds";
+import FilingStatus from "../components/filing-status/FilingStatus";
+import W2Form from "../components/w2-form/W2Form";
+import Ten99From from "../components/1099-form/Ten99Form";
+import ReviewFile from "../components/review-file/ReviewFile";
 
 function TaxFile() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -21,7 +32,13 @@ function TaxFile() {
     state: "",
     zipcode: "",
   });
-  const [taxFormData, setTaxFormData] = useState({});
+  const [taxFormData, setTaxFormData] = useState({
+    filingStatus: "",
+    w2Income: "",
+    w2Location: "",
+    ten99Income: "",
+    ten99Location: "",
+  });
   const [step, setStep] = useState(1);
   const [readyToFile, setReadyToFile] = useState(false);
 
@@ -50,6 +67,16 @@ function TaxFile() {
             formHeading={"Please complete and verify"}
           />
         );
+      case 2:
+        return (
+          <FilingStatus formData={taxFormData} setFormData={setTaxFormData} />
+        );
+      case 3:
+        return <W2Form />;
+      case 4:
+        return <Ten99From />;
+      case 5:
+        return <ReviewFile />;
       default:
     }
   };
@@ -60,11 +87,14 @@ function TaxFile() {
         <div>
           {renderStep()}
           <ButtonGroup type="default" className="margin-3">
-            <Button type="button" disabled={step === 1}>
+            <Button type="button" disabled={step === 1} onClick={prevStep}>
               Back
             </Button>
-            <Button type="button">Continue</Button>
+            <Button type="button" disabled={step === 5} onClick={nextStep}>
+              Continue
+            </Button>
           </ButtonGroup>
+          {step === 5 && <Button type="submit">Submit and file</Button>}
         </div>
       ) : (
         <FileStart handleClick={handleReadyToFileClick} />
