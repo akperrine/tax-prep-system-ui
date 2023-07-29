@@ -3,7 +3,7 @@ import { FilingStatusOptions } from "../../utils/enums";
 import "./FilingStatus.css";
 import { useEffect, useState } from "react";
 
-function FilingStatus({ formData, setFormData, setIsValid }) {
+function FilingStatus({ formData, setFormData, setIsInvalid }) {
   const [selected, setSelected] = useState("none");
 
   const handleClick = (e) => {
@@ -12,8 +12,14 @@ function FilingStatus({ formData, setFormData, setIsValid }) {
   };
 
   useEffect(() => {
-    setSelected(formData.filingStatus);
-  }, []);
+    // console.log(formData.);
+    if (formData.filingStatus === "") {
+      setIsInvalid(true);
+    } else {
+      setSelected(formData.filingStatus);
+      setIsInvalid(false);
+    }
+  }, [formData.filingStatus]);
 
   return (
     <>

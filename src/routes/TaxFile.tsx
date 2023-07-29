@@ -54,9 +54,11 @@ function TaxFile() {
   const [readyToFile, setReadyToFile] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
   const [invalidNext, setInvalidNext] = useState(false);
+  console.log(isInvalid);
 
   const prevStep = () => {
     setStep(step - 1);
+    setIsInvalid(false);
     setInvalidNext(false);
   };
   const nextStep = () => {
