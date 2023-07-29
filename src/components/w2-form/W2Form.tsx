@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 
-function W2Form({ formData, setFormData, handleChange }) {
+function W2Form({ formData, handleChange, setIsValid }) {
   const handleSubmit = () => {};
   return (
     <>

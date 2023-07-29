@@ -24,6 +24,7 @@ function ProfileForm({
   handleChange,
   hiddenSubmit,
   formHeading,
+  setIsInvalid,
 }) {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();

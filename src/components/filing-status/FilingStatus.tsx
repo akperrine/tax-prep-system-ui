@@ -3,7 +3,7 @@ import { FilingStatusOptions } from "../../utils/enums";
 import "./FilingStatus.css";
 import { useEffect, useState } from "react";
 
-function FilingStatus({ formData, setFormData }) {
+function FilingStatus({ formData, setFormData, setIsValid }) {
   const [selected, setSelected] = useState("none");
 
   const handleClick = (e) => {

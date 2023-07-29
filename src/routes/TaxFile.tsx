@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import FileStart from "../components/file-start/FileStart";
 import {
+  Alert,
   Button,
   ButtonGroup,
   PrimaryNav,
@@ -49,12 +50,24 @@ function TaxFile() {
     Ten99State: "",
     Ten99Zipcode: "",
   });
-  console.log(taxFormData);
   const [step, setStep] = useState(1);
   const [readyToFile, setReadyToFile] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [invalidNext, setInvalidNext] = useState(false);
 
-  const prevStep = () => setStep(step - 1);
-  const nextStep = () => setStep(step + 1);
+  const prevStep = () => {
+    setStep(step - 1);
+    setInvalidNext(false);
+  };
+  const nextStep = () => {
+    console.log(isInvalid);
+    if (isInvalid === false) {
+      setInvalidNext(false);
+      setStep(step + 1);
+    } else {
+      setInvalidNext(true);
+    }
+  };
 
   const handleReadyToFileClick = () => setReadyToFile(true);
 
@@ -76,26 +89,31 @@ function TaxFile() {
             hiddenSubmit={true}
             handleChange={(e) => handleChange(e, setProfileFormData)}
             formHeading={"Please complete and verify"}
+            setIsInvalid={setIsInvalid}
           />
         );
       case 2:
         return (
-          <FilingStatus formData={taxFormData} setFormData={setTaxFormData} />
+          <FilingStatus
+            formData={taxFormData}
+            setFormData={setTaxFormData}
+            setIsInvalid={setIsInvalid}
+          />
         );
       case 3:
         return (
           <W2Form
             formData={taxFormData}
-            setFormData={setTaxFormData}
             handleChange={(e) => handleChange(e, setTaxFormData)}
+            setIsInvalid={setIsInvalid}
           />
         );
       case 4:
         return (
           <Ten99From
             formData={taxFormData}
-            setFormData={setTaxFormData}
             handleChange={(e) => handleChange(e, setTaxFormData)}
+            setIsInvalid={setIsInvalid}
           />
         );
       case 5:
@@ -113,6 +131,11 @@ function TaxFile() {
     <>
       {readyToFile ? (
         <div>
+          {invalidNext && (
+            <Alert type="error" headingLevel="h4" className="margin-1" noIcon>
+              Missing valid input
+            </Alert>
+          )}
           {renderStep()}
           <ButtonGroup type="default" className="margin-3">
             <Button type="button" disabled={step === 1} onClick={prevStep}>

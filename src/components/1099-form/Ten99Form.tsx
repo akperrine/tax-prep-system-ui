@@ -6,12 +6,12 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 
-function Ten99From({ formData, setFormData, handleChange }) {
+function Ten99From({ formData, handleChange, setIsValid }) {
   const handleSubmit = () => {};
   return (
     <>
       <div className="profileForm-container">
-        <h2>Add W2 form info</h2>
+        <h2>Add 1099 form info</h2>
 
         <Form onSubmit={handleSubmit} large className="profile-form-container">
           <div className="profile-fieldset-container">
