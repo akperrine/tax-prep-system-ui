@@ -5,9 +5,20 @@ import {
   Label,
   TextInput,
 } from "@trussworks/react-uswds";
+import { useEffect } from "react";
 
-function W2Form({ formData, handleChange, setIsValid }) {
+function W2Form({ formData, handleChange, setIsInvalid }) {
   const handleSubmit = () => {};
+
+  useEffect(() => {
+    const incomeRegex = /^(?:\$?)(?:\d{1,3}(?:,\d{3})*|\d+)\.\d{2}$/;
+    // console.log(incomeRegex.test(formData.w2Income));
+    if (incomeRegex.test(formData.w2Income)) {
+      setIsInvalid(false);
+    } else {
+      setIsInvalid(true);
+    }
+  }, [formData.w2Income]);
   return (
     <>
       <div className="profileForm-container">

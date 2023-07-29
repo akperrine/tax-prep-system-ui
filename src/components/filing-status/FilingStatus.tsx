@@ -12,7 +12,6 @@ function FilingStatus({ formData, setFormData, setIsInvalid }) {
   };
 
   useEffect(() => {
-    // console.log(formData.);
     if (formData.filingStatus === "") {
       setIsInvalid(true);
     } else {
