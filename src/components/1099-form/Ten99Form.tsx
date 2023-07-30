@@ -27,7 +27,9 @@ function Ten99From({ formData, handleChange, setIsInvalid }) {
         <Form onSubmit={handleSubmit} large className="profile-form-container">
           <div className="profile-fieldset-container">
             <Fieldset legendStyle="large" className="profile-fieldset">
-              <Label htmlFor="ten99Income">Income</Label>
+              <Label htmlFor="ten99Income" hint=" *put 0.00 if N/A">
+                Income
+              </Label>
               <TextInput
                 id="ten99Income"
                 name="ten99Income"

@@ -27,7 +27,9 @@ function W2Form({ formData, handleChange, setIsInvalid }) {
         <Form onSubmit={handleSubmit} large className="profile-form-container">
           <div className="profile-fieldset-container">
             <Fieldset legendStyle="large" className="profile-fieldset">
-              <Label htmlFor="w2Income">Income</Label>
+              <Label htmlFor="w2Income" hint=" *put 0.00 if N/A">
+                Income
+              </Label>
               <TextInput
                 id="w2Income"
                 name="w2Income"

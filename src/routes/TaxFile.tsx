@@ -36,19 +36,19 @@ function TaxFile() {
   const [taxFormData, setTaxFormData] = useState({
     filingStatus: "",
     w2Income: "",
-    w2witheld: "",
+    w2Witheld: "",
     w2Address1: "",
     w2Address2: "",
     w2City: "",
     w2State: "",
     w2Zipcode: "",
     ten99Income: "",
-    Ten99witheld: "",
-    Ten99Address1: "",
-    Ten99Address2: "",
-    Ten99City: "",
-    Ten99State: "",
-    Ten99Zipcode: "",
+    ten99witheld: "",
+    ten99Address1: "",
+    ten99Address2: "",
+    ten99City: "",
+    ten99State: "",
+    ten99Zipcode: "",
   });
   const [step, setStep] = useState(1);
   const [readyToFile, setReadyToFile] = useState(false);
@@ -121,8 +121,8 @@ function TaxFile() {
       case 5:
         return (
           <ReviewFile
-          // profileFormData={profileFormData}
-          // taxFormData={taxFormData}
+            profileFormData={profileFormData}
+            taxFormData={taxFormData}
           />
         );
       default:
