@@ -56,7 +56,7 @@ function ReviewFile({ profileFormData, taxFormData }) {
           </Grid>
 
           <Grid col={4} className="padding-1">
-            W2 Business Address:{" "}
+            <u>W2 Business Address</u>:{" "}
             {checkAddressPresent(
               taxFormData.w2Address1,
               taxFormData.w2City,
@@ -67,19 +67,19 @@ function ReviewFile({ profileFormData, taxFormData }) {
               : "N/A"}
           </Grid>
         </Grid>
-        <Grid row gap="md">
+        <Grid row gap="md" className="padding-top-1 padding-bottom-1 border">
           <Grid col={4} className="padding-1">
-            Income: {taxFormData.ten99Income}
+            <u>1099 Income</u>: {taxFormData.ten99Income}
           </Grid>
           <Grid col={6} className="padding-1">
-            Deductions:{" "}
+            <u>1099 Deductions</u>:{" "}
             {taxFormData.ten99Deductions === ""
               ? "N/A"
               : taxFormData.ten99Deductions}
           </Grid>
 
           <Grid col={4} className="padding-1">
-            1099 Business Address:{" "}
+            <u>1099 Business Address</u>:{" "}
             {checkAddressPresent(
               taxFormData.ten99Address1,
               taxFormData.ten99City,

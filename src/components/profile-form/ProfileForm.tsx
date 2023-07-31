@@ -62,6 +62,25 @@ function ProfileForm({
     }
   }, [user]);
 
+  useEffect(() => {
+    if (setIsInvalid) {
+      if (
+        formData.day === "" ||
+        formData.month === "" ||
+        formData.year === "" ||
+        formData.ssn === "" ||
+        formData.address1 === "" ||
+        formData.city === "" ||
+        formData.state === "" ||
+        formData.zipcode === ""
+      ) {
+        setIsInvalid(true);
+      } else {
+        setIsInvalid(false);
+      }
+    }
+  }, [formData]);
+
   const validateDate = (day: number, month: number, year: number): boolean => {
     const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
     // no negative numbers
