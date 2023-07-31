@@ -45,7 +45,7 @@ function Ten99From({ formData, handleChange, setIsInvalid }) {
                 id="ten99Witheld"
                 name="ten99Witheld"
                 type="text"
-                value={formData.ten99Witheld}
+                value={formData.ten99Deductions}
                 onChange={handleChange}
                 required
               />

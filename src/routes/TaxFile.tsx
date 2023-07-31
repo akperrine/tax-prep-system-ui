@@ -43,7 +43,7 @@ function TaxFile() {
     w2State: "",
     w2Zipcode: "",
     ten99Income: "",
-    ten99witheld: "",
+    ten99Deductions: "",
     ten99Address1: "",
     ten99Address2: "",
     ten99City: "",
