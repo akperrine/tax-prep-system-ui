@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ProfileForm from "../components/profile-form/ProfileForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -7,6 +7,7 @@ import {
   Alert,
   Button,
   ButtonGroup,
+  ModalRef,
   PrimaryNav,
   ProcessList,
   ProcessListHeading,
@@ -54,7 +55,7 @@ function TaxFile() {
   const [readyToFile, setReadyToFile] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
   const [invalidNext, setInvalidNext] = useState(false);
-  console.log(isInvalid);
+  // const modalRef = useRef<ModalRef>(null);
 
   const prevStep = () => {
     setStep(step - 1);
