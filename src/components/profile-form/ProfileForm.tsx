@@ -36,6 +36,7 @@ function ProfileForm({
     if (user?.location === null) {
       setNoLocation(true);
     } else {
+      console.log(user);
       setNoLocation(false);
       const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
       const userYear = yearMonthDay[0];

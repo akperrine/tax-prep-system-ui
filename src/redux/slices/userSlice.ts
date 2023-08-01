@@ -15,11 +15,6 @@ const userSlice = createSlice({
     clearUser: (state) => {
       state.user = null;
     },
-    updateLocation: (state, action: PayloadAction<ILocation>) => {
-      if (state.user) {
-        state.user.location = action.payload;
-      }
-    },
   },
 });
 
