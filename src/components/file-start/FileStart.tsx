@@ -17,12 +17,12 @@ function FileStart({ handleClick }) {
 
   return (
     <div>
-      <div className="display-flex flex-column flex-align-center flex-justify-center">
+      <div className="display-flex flex-column flex-align-center flex-justify-center ">
         <h2>Let's File your taxes</h2>
         <ModalToggleButton
           modalRef={modalRef}
           size="big"
-          className="padding-3 margin-3"
+          className="padding-2 margin-3"
         >
           File your taxes
         </ModalToggleButton>
@@ -61,23 +61,6 @@ function FileStart({ handleClick }) {
       </div>
     </div>
   );
-  // return (
-  //   <>
-  //     <Card
-  //       gridLayout={{ tablet: { col: 4 } }}
-  //       containerProps={{ className: "border-ink" }}
-  //     >
-  //       <CardHeader>
-  //         <h3 className="usa-card__heading">Ready to start new tax filing?</h3>
-  //       </CardHeader>
-  //       <CardFooter>
-  //         <Button type="button" onClick={handleClick}>
-  //           Yes
-  //         </Button>
-  //       </CardFooter>
-  //     </Card>
-  //   </>
-  // );
 }
 
 export default FileStart;

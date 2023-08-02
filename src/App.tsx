@@ -3,7 +3,7 @@ import "./App.css";
 import Navigation from "./routes/navigation/Navigation";
 import Home from "./routes/home/Home";
 import TaxFile from "./routes/TaxFile";
-import TaxView from "./routes/TaxView";
+import TaxView from "./routes/tax-view/TaxView";
 import Login from "./routes/login/Login";
 import Profile from "./routes/Profile";
 import SignUp from "./routes/signup/SignUp";
@@ -15,6 +15,7 @@ import { RootState } from "./redux/store";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
+  console.log;
   // const navigate = useNavigate();
   // useEffect(() => {
   //   if (user == null) {

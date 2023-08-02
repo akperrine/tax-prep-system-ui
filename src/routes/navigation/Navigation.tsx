@@ -9,6 +9,7 @@ import { clearUser } from "../../redux/slices/userSlice";
 function Navigation() {
   // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
+  console.log(user);
   const dispatch = useDispatch();
 
   const handleSignOut = () => dispatch(clearUser());
@@ -43,7 +44,7 @@ function Navigation() {
     <>
       <nav className="navbar">
         <img className="logo" src="src/assets/tax-prepped.png" alt="logo" />
-        {user && renderNavLinks()}
+        {user !== null && renderNavLinks()}
       </nav>
       <Outlet />
     </>

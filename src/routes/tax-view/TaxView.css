@@ -1,0 +1,14 @@
+.tax-view-header-container > h3 {
+  /* outline: 1px solid black; */
+  font-size: 32px;
+}
+
+.tax-view-body-container > div > p {
+  font-size: 25px;
+  text-decoration: underline;
+}
+
+.tax-view-body-container > div > span {
+  font-size: 20px;
+  text-decoration: none;
+}

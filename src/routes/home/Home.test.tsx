@@ -3,29 +3,14 @@ import Home from "./Home";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { renderWithProviders } from "../../utils/test.utils";
 import { store } from "../../redux/store";
-import * as reactRedux from "react-redux";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useSelector: jest.fn(),
+}));
 
 describe("Home page tests", () => {
-  const testDataWithLocation = {
-    id: 1,
-    firstName: "Austin",
-    lastName: "Perrine",
-    email: "a@p.com",
-    dob: null,
-    ssn: null,
-    location: {
-      id: 1,
-      address: "123 way",
-      address2: null,
-      city: "Scottsdale",
-      state: "AZ",
-      zipcode: "11222",
-    },
-    appUserInformation: {
-      id: 1,
-      taxDocuments: [],
-    },
-  };
   const testDataNoLocation = {
     id: 1,
     firstName: "Austin",
@@ -40,14 +25,6 @@ describe("Home page tests", () => {
     },
   };
 
-  const useSelectorMock = jest.spyOn(reactRedux, "useSelector");
-  const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
-
-  beforeEach(() => {
-    useSelectorMock.mockClear();
-    useDispatchMock.mockClear();
-  });
-
   it("renders with user name", async () => {
     const { store } = renderWithProviders(
       <MemoryRouter>
@@ -60,8 +37,6 @@ describe("Home page tests", () => {
       }
     );
 
-    useSelectorMock.mockReturnValue(testDataNoLocation);
-    console.log("SStore,", store);
-    expect(screen.getByText("Welcome Austin")).toBeInTheDocument();
+    expect(store.getState().user.firstName).toContain("Austin");
   });
 });

@@ -110,6 +110,7 @@ function ProfileForm({
     const year = parseInt(formData.year);
     const address2 = formData.address2 === "" ? null : formData.address2;
     const social = formData.ssn.replace(/\-/g, "");
+    console.log(typeof user.id);
 
     const isValidDate = validateDate(day, month, year);
     if (!isValidDate) {
@@ -119,7 +120,7 @@ function ProfileForm({
       let ISODate = date.toISOString();
       if (user) {
         const userDTO: IUser = {
-          id: user.id,
+          id: user.id.toString(),
           firstName: formData.firstName!,
           lastName: formData.lastName!,
           email: formData.email!,
