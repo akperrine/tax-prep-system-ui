@@ -9,7 +9,6 @@ import { clearUser } from "../../redux/slices/userSlice";
 function Navigation() {
   // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
-  console.log(user);
   const dispatch = useDispatch();
 
   const handleSignOut = () => dispatch(clearUser());
@@ -22,7 +21,7 @@ function Navigation() {
       File taxes
     </Link>,
     <Link className="nav-link" to={"/display"}>
-      View Deduction
+      View Filing
     </Link>,
     <Link className="nav-link" to={"/profile"}>
       Profile

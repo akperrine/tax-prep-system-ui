@@ -25,6 +25,7 @@ function ProfileForm({
   hiddenSubmit,
   formHeading,
   setIsInvalid,
+  setFileInvalidDate,
 }) {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
@@ -32,36 +33,35 @@ function ProfileForm({
   const [invalidDate, setInvalidDate] = useState(false);
   const [visibleToast, setVisibleToast] = useState(false);
 
-  useEffect(() => {
-    if (user?.location === null) {
-      setNoLocation(true);
-    } else {
-      console.log(user);
-      setNoLocation(false);
-      const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
-      const userYear = yearMonthDay[0];
-      const userMonth = yearMonthDay[1];
-      const userDay = yearMonthDay[2];
+  // useEffect(() => {
+  //   if (user?.location === null) {
+  //     setNoLocation(true);
+  //   } else {
+  //     setNoLocation(false);
+  //     const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
+  //     const userYear = yearMonthDay[0];
+  //     const userMonth = yearMonthDay[1];
+  //     const userDay = yearMonthDay[2];
 
-      setFormData({
-        ...formData,
-        firstName: user?.firstName,
-        lastName: user?.lastName,
-        email: user?.email,
-        day: userDay,
-        month: userMonth,
-        year: userYear,
-        ssn: user?.ssn!,
-        address1: user?.location?.address!,
-        city: user?.location?.city!,
-        state: user?.location?.state!,
-        zipcode: user?.location?.zipcode.toString()!,
-      });
-      if (user?.location?.address2) {
-        setFormData({ ...formData, address2: user.location.address2 });
-      }
-    }
-  }, [user]);
+  //     // setFormData({
+  //     //   ...formData,
+  //     //   firstName: user?.firstName,
+  //     //   lastName: user?.lastName,
+  //     //   email: user?.email,
+  //     //   day: userDay,
+  //     //   month: userMonth,
+  //     //   year: userYear,
+  //     //   ssn: user?.ssn!,
+  //     //   address1: user?.location?.address!,
+  //     //   city: user?.location?.city!,
+  //     //   state: user?.location?.state!,
+  //     //   zipcode: user?.location?.zipcode.toString()!,
+  //     // });
+  //     // if (user?.location?.address2) {
+  //     //   setFormData({ ...formData, address2: user.location.address2 });
+  //     // }
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (setIsInvalid) {
@@ -75,17 +75,33 @@ function ProfileForm({
         formData.state === "" ||
         formData.zipcode === ""
       ) {
+        setNoLocation(true);
         setIsInvalid(true);
       } else {
         setIsInvalid(false);
+        setNoLocation(false);
+      }
+    }
+    if (setFileInvalidDate) {
+      if (
+        validateDate(
+          parseInt(formData.day),
+          parseInt(formData.month),
+          parseInt(formData.year)
+        )
+      ) {
+        setFileInvalidDate(false);
+      } else {
+        setFileInvalidDate(true);
       }
     }
   }, [formData]);
 
   const validateDate = (day: number, month: number, year: number): boolean => {
+    console.log(day, day < 1);
     const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
     // no negative numbers
-    if (day < 0 || month < 0 || year < 1900) return false;
+    if (day < 1 || month < 1 || year < 1900) return false;
     // check valid month
     if (month > 12) return false;
     //check not more days than a month
@@ -105,12 +121,12 @@ function ProfileForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInvalidDate(false);
+
     const day = parseInt(formData.day);
     const month = parseInt(formData.month);
     const year = parseInt(formData.year);
     const address2 = formData.address2 === "" ? null : formData.address2;
     const social = formData.ssn.replace(/\-/g, "");
-    console.log(typeof user.id);
 
     const isValidDate = validateDate(day, month, year);
     if (!isValidDate) {

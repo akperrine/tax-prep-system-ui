@@ -1,5 +1,3 @@
-import { StateAbbreviation } from "./enums";
-
 //DTOs
 export interface ILoginUserDTO {
   email: string;
@@ -23,7 +21,7 @@ export interface IUserState {
 }
 
 export interface ILocation {
-  id?: number;
+  id?: string;
   address: string;
   address2: string | null;
   city: string;
@@ -36,7 +34,7 @@ export interface IAppUserInformation {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
