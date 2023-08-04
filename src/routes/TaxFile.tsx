@@ -193,9 +193,15 @@ function TaxFile() {
         zipcode: parseInt(taxFormData.ten99Zipcode),
       },
     };
+    let filingStatus;
+    if (taxFormData.filingStatus === "single") {
+      filingStatus = "SINGLE";
+    } else {
+      filingStatus = "MARRIED_FILING_JOINTLY";
+    }
     const taxDocumentDto: ITaxDocumentsDto = {
       userId: user?.id!,
-      maritalStatus: "SINGLE",
+      maritalStatus: filingStatus,
       formW2s: [w2],
       form1099s: [ten99],
     };
