@@ -10,7 +10,7 @@ import Ten99From from "../components/1099-form/Ten99Form";
 import ReviewFile from "../components/review-file/ReviewFile";
 import { updateUser } from "../utils/api/userApi";
 import { useDispatch } from "react-redux";
-import { IUser } from "../utils/interfaces";
+import { I1099, ITaxDocumentsDto, IUser, IW2 } from "../utils/interfaces";
 import { setUser } from "../redux/slices/userSlice";
 
 function TaxFile() {
@@ -52,34 +52,52 @@ function TaxFile() {
   const [isInvalid, setIsInvalid] = useState(false);
   const [invalidDate, setInvalidDate] = useState(false);
   const [invalidNext, setInvalidNext] = useState(false);
-  // const modalRef = useRef<ModalRef>(null);
 
+  console.log(taxFormData, user.id);
   useEffect(() => {
+    let updateDay,
+      updateMonth,
+      updateYear,
+      updateSsn,
+      updateAddress1,
+      updateAddress2,
+      updateState,
+      updateCity,
+      updateZipcode = "";
     if (user?.dob) {
       const yearMonthDay = user?.dob.slice(0, 10).split("-")!;
-      const userYear = yearMonthDay[0];
-      const userMonth = yearMonthDay[1];
-      const userDay = yearMonthDay[2];
-
-      setProfileFormData({
-        ...profileFormData,
-        day: userDay,
-        month: userMonth,
-        year: userYear,
-      });
+      updateYear = yearMonthDay[0];
+      updateMonth = yearMonthDay[1];
+      updateDay = yearMonthDay[2];
     }
     if (user?.ssn) {
-      setProfileFormData({ ...profileFormData, ssn: user.ssn });
+      // setFormData({ ...formData, ssn: user.ssn });
+      updateSsn = user.ssn;
     }
     if (user?.location) {
-      setProfileFormData({
-        ...profileFormData,
-        address1: user.location.address,
-        city: user.location.city,
-        state: user.location.state,
-        zipcode: user.location.zipcode.toString(),
-      });
+      updateAddress1 = user.location.address;
+      updateCity = user.location.city;
+      updateState = user.location.state;
+      updateZipcode = user.location.zipcode.toString();
+      // setFormData({
+      //   ...formData,
+      //   address1: user.location.address,
+      //   city: user.location.city,
+      //   state: user.location.state,
+      //   zipcode: user.location.zipcode.toString(),
+      // });
     }
+    setProfileFormData({
+      ...profileFormData,
+      day: updateDay!,
+      month: updateMonth!,
+      year: updateYear!,
+      address1: updateAddress1!,
+      ssn: updateSsn!,
+      city: updateCity!,
+      state: updateState!,
+      zipcode: updateZipcode,
+    });
   }, []);
 
   const prevStep = () => {
@@ -88,7 +106,6 @@ function TaxFile() {
     setInvalidNext(false);
   };
   const nextStep = () => {
-    console.log(isInvalid);
     if (isInvalid === false) {
       setInvalidNext(false);
       setStep(step + 1);
@@ -101,31 +118,11 @@ function TaxFile() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, setterFunction) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setterFunction((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  // const validateDate = (day: number, month: number, year: number): boolean => {
-  //   const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
-  //   // no negative numbers
-  //   if (day < 0 || month < 0 || year < 1900) return false;
-  //   // check valid month
-  //   if (month > 12) return false;
-  //   //check not more days than a month
-  //   // more than 31
-  //   if (monthsWith31Days.includes(month) && day > 31) {
-  //     return false;
-  //     // Check days in Feb
-  //   } else if (month == 2 && day > 28) {
-  //     return false;
-  //     // Check days with only 30 days
-  //   } else if (day > 30) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   const handleSubmit = async () => {
     const day = parseInt(profileFormData.day);
@@ -167,7 +164,42 @@ function TaxFile() {
         console.log(error);
       }
     }
-    // }
+    const w2IncomeNumber = parseInt(taxFormData.w2Income.replace(/[$,]/g, ""));
+    const ten99IncomeNumber = parseInt(
+      taxFormData.ten99Income.replace(/[$,]/g, "")
+    );
+    const numberWitheld =
+      taxFormData.w2Witheld === "" ? 0 : parseInt(taxFormData.w2Witheld);
+    const w2: IW2 = {
+      employerEIN: "",
+      income: w2IncomeNumber,
+      witheld: numberWitheld,
+      location: {
+        address: taxFormData.w2Address1,
+        address2: taxFormData.w2Address2,
+        city: taxFormData.w2City,
+        state: taxFormData.w2State,
+        zipcode: parseInt(taxFormData.w2Zipcode),
+      },
+    };
+    const ten99: I1099 = {
+      payerTIN: "",
+      income: ten99IncomeNumber,
+      location: {
+        address: taxFormData.ten99Address1,
+        address2: taxFormData.ten99Address2,
+        city: taxFormData.ten99City,
+        state: taxFormData.ten99State,
+        zipcode: parseInt(taxFormData.ten99Zipcode),
+      },
+    };
+    const taxDocumentDto: ITaxDocumentsDto = {
+      userId: user?.id!,
+      maritalStatus: taxFormData.filingStatus,
+      formW2s: [w2],
+      form1099s: [ten99],
+    };
+    console.log(taxDocumentDto);
   };
 
   const renderStep = () => {

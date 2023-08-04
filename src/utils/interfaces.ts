@@ -11,6 +11,13 @@ export interface ISignUpUserDTO {
   password: string;
 }
 
+export interface ITaxDocumentsDto {
+  userId: string;
+  maritalStatus: string;
+  formW2s: IW2[];
+  form1099s: I1099[];
+}
+
 //Redux Store Types
 export interface RootState {
   user: IUserState;
@@ -29,8 +36,8 @@ export interface ILocation {
   zipcode: number;
 }
 
-export interface IAppUserInformation {
-  taxDocuments: string[];
+export interface ITaxDocuments {
+  taxesOwed: number;
 }
 
 export interface IUser {
@@ -41,5 +48,19 @@ export interface IUser {
   dob: string;
   location: ILocation;
   ssn: string;
-  taxInformation?: IAppUserInformation;
+  taxDocuments?: ITaxDocuments[];
+}
+
+export interface IW2 {
+  employerEIN: string;
+  income: number;
+  witheld?: number;
+  location: ILocation;
+}
+
+export interface I1099 {
+  payerTIN: string;
+  income: number;
+  decductions?: number;
+  location: ILocation;
 }

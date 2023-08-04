@@ -67,7 +67,7 @@ function ProfileForm({
         //   zipcode: user.location.zipcode.toString(),
         // });
       }
-
+      console.log(updateDay);
       setFormData({
         ...formData,
         day: updateDay,
@@ -83,7 +83,6 @@ function ProfileForm({
   }, []);
 
   useEffect(() => {
-    console.log("runs", noLocation, formData.day);
     if (
       formData.day === undefined ||
       formData.month === "" ||
@@ -94,7 +93,6 @@ function ProfileForm({
       formData.state === "" ||
       formData.zipcode === ""
     ) {
-      console.log("hits");
       setNoLocation(true);
       if (setIsInvalid) {
         setIsInvalid(true);
