@@ -11,7 +11,8 @@ import ReviewFile from "../components/review-file/ReviewFile";
 import { updateUser } from "../utils/api/userApi";
 import { useDispatch } from "react-redux";
 import { I1099, ITaxDocumentsDto, IUser, IW2 } from "../utils/interfaces";
-import { setUser } from "../redux/slices/userSlice";
+import { setUser, updateTaxDoc } from "../redux/slices/userSlice";
+import { addTaxDocument } from "../utils/api/taxApi";
 
 function TaxFile() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -53,7 +54,6 @@ function TaxFile() {
   const [invalidDate, setInvalidDate] = useState(false);
   const [invalidNext, setInvalidNext] = useState(false);
 
-  console.log(taxFormData, user.id);
   useEffect(() => {
     let updateDay,
       updateMonth,
@@ -195,11 +195,15 @@ function TaxFile() {
     };
     const taxDocumentDto: ITaxDocumentsDto = {
       userId: user?.id!,
-      maritalStatus: taxFormData.filingStatus,
+      maritalStatus: "SINGLE",
       formW2s: [w2],
       form1099s: [ten99],
     };
     console.log(taxDocumentDto);
+    try {
+      const response = await addTaxDocument(taxDocumentDto);
+      dispatch(updateTaxDoc(response));
+    } catch (error) {}
   };
 
   const renderStep = () => {

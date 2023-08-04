@@ -13,11 +13,15 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
     clearUser: (state) => {
-      console.log(state.user);
       state.user = null;
+    },
+    updateTaxDoc: (state, action) => {
+      if (state.user) {
+        state.user.taxDocuments = action.payload;
+      }
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, updateTaxDoc } = userSlice.actions;
 export default userSlice.reducer;
