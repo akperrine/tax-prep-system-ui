@@ -1,6 +1,60 @@
 import { Grid, GridContainer } from "@trussworks/react-uswds";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { getTaxCalcBeforeSubmit } from "../../utils/api/taxApi";
 
 function ReviewFile({ profileFormData, taxFormData }) {
+  const user = useSelector((state: RootState) => state.user.user);
+  useEffect(() => {
+    const w2IncomeNumber = parseInt(taxFormData.w2Income.replace(/[$,]/g, ""));
+    const ten99IncomeNumber = parseInt(
+      taxFormData.ten99Income.replace(/[$,]/g, "")
+    );
+    const numberWitheld =
+      taxFormData.w2Witheld === "" ? 0 : parseInt(taxFormData.w2Witheld);
+    const w2: IW2 = {
+      employerEIN: "",
+      income: w2IncomeNumber,
+      witheld: numberWitheld,
+      location: {
+        address: taxFormData.w2Address1,
+        address2: taxFormData.w2Address2,
+        city: taxFormData.w2City,
+        state: taxFormData.w2State,
+        zipcode: parseInt(taxFormData.w2Zipcode),
+      },
+    };
+    const ten99: I1099 = {
+      payerTIN: "",
+      income: ten99IncomeNumber,
+      location: {
+        address: taxFormData.ten99Address1,
+        address2: taxFormData.ten99Address2,
+        city: taxFormData.ten99City,
+        state: taxFormData.ten99State,
+        zipcode: parseInt(taxFormData.ten99Zipcode),
+      },
+    };
+    let filingStatus;
+    if (taxFormData.filingStatus === "single") {
+      filingStatus = "SINGLE";
+    } else {
+      filingStatus = "MARRIED_FILING_JOINTLY";
+    }
+    const taxDocumentDto: ITaxDocumentsDto = {
+      userId: user?.id!,
+      maritalStatus: filingStatus,
+      formW2s: [w2],
+      form1099s: [ten99],
+    };
+    console.log(taxDocumentDto);
+    (async () => {
+      console.log("fire");
+      const response = await getTaxCalcBeforeSubmit(taxDocumentDto);
+      console.log(response);
+    })();
+  }, []);
   const checkAddressPresent = (
     address: string,
     city: string,

@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import ProfileForm from "../components/profile-form/ProfileForm";
+import ProfileForm from "../../components/profile-form/ProfileForm";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import FileStart from "../components/file-start/FileStart";
+import { RootState } from "../../redux/store";
+import FileStart from "../../components/file-start/FileStart";
 import { Alert, Button, ButtonGroup } from "@trussworks/react-uswds";
-import FilingStatus from "../components/filing-status/FilingStatus";
-import W2Form from "../components/w2-form/W2Form";
-import Ten99From from "../components/1099-form/Ten99Form";
-import ReviewFile from "../components/review-file/ReviewFile";
-import { updateUser } from "../utils/api/userApi";
+import FilingStatus from "../../components/filing-status/FilingStatus";
+import W2Form from "../../components/w2-form/W2Form";
+import Ten99From from "../../components/1099-form/Ten99Form";
+import ReviewFile from "../../components/review-file/ReviewFile";
+import { updateUser } from "../../utils/api/userApi";
 import { useDispatch } from "react-redux";
-import { I1099, ITaxDocumentsDto, IUser, IW2 } from "../utils/interfaces";
-import { setUser, updateTaxDoc } from "../redux/slices/userSlice";
-import { addTaxDocument } from "../utils/api/taxApi";
+import { I1099, ITaxDocumentsDto, IUser, IW2 } from "../../utils/interfaces";
+import { setUser, updateTaxDoc } from "../../redux/slices/userSlice";
+import { addTaxDocument } from "../../utils/api/taxApi";
 
 function TaxFile() {
   const user = useSelector((state: RootState) => state.user.user);

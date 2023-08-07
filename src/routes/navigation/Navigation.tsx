@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { clearUser } from "../../redux/slices/userSlice";
 
 function Navigation() {
-  // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
 

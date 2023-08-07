@@ -2,7 +2,7 @@ import { Outlet, Route, Routes, redirect, useNavigate } from "react-router-dom";
 import "./App.css";
 import Navigation from "./routes/navigation/Navigation";
 import Home from "./routes/home/Home";
-import TaxFile from "./routes/TaxFile";
+import TaxFile from "./routes/tax-file/TaxFile";
 import TaxView from "./routes/tax-view/TaxView";
 import Login from "./routes/login/Login";
 import Profile from "./routes/Profile";

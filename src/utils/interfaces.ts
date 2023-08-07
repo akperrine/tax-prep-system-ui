@@ -64,3 +64,21 @@ export interface I1099 {
   decductions?: number;
   location: ILocation;
 }
+
+export interface ITaxFormData {
+  filingStatus: string;
+  w2Income: string;
+  w2Witheld: string;
+  w2Address1: string;
+  w2Address2: string;
+  w2City: string;
+  w2State: string;
+  w2Zipcode: string;
+  ten99Income: string;
+  ten99Deductions: string;
+  ten99Address1: string;
+  ten99Address2: string;
+  ten99City: string;
+  ten99State: string;
+  ten99Zipcode: string;
+}
