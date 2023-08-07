@@ -55,6 +55,10 @@ function TaxFile() {
   const [invalidNext, setInvalidNext] = useState(false);
 
   useEffect(() => {
+    console.log(isInvalid);
+  }, [isInvalid]);
+
+  useEffect(() => {
     let updateDay,
       updateMonth,
       updateYear,

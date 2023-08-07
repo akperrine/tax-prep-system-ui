@@ -83,40 +83,72 @@ function ProfileForm({
   }, []);
 
   useEffect(() => {
+    const isValidDate = !validateDate(
+      parseInt(formData.day),
+      parseInt(formData.month),
+      parseInt(formData.year)
+    );
+    console.log(formData.day);
+
     if (
+      formData.day === "" ||
       formData.day === undefined ||
       formData.month === "" ||
+      formData.month === undefined ||
       formData.year === "" ||
+      formData.year === undefined ||
       formData.ssn === "" ||
+      formData.ssn === undefined ||
       formData.address1 === "" ||
+      formData.address1 === undefined ||
       formData.city === "" ||
+      formData.city === undefined ||
       formData.state === "" ||
-      formData.zipcode === ""
+      formData.state === undefined ||
+      formData.zipcode === "" ||
+      formData.zipcode === undefined ||
+      isValidDate
     ) {
       setNoLocation(true);
       if (setIsInvalid) {
         setIsInvalid(true);
       }
+      console.log("not good");
     } else {
       if (setIsInvalid) {
+        setNoLocation(false);
         setIsInvalid(false);
       }
-      setNoLocation(false);
+      console.log("all good but valid");
+    }
+    if (isValidDate) {
+      setFileInvalidDate(true);
+    } else {
+      setFileInvalidDate(false);
     }
 
-    if (setFileInvalidDate) {
-      if (
-        validateDate(
-          parseInt(formData.day),
-          parseInt(formData.month),
-          parseInt(formData.year)
-        )
-      ) {
-        setFileInvalidDate(false);
-      } else {
-        setFileInvalidDate(true);
-      }
-    }
+    // if (setFileInvalidDate) {
+    //   if (
+    //     validateDate(
+    //       parseInt(formData.day),
+    //       parseInt(formData.month),
+    //       parseInt(formData.year)
+    //     )
+    //   ) {
+    //     console.log(
+    //       validateDate(
+    //         parseInt(formData.day),
+    //         parseInt(formData.month),
+    //         parseInt(formData.year)
+    //       )
+    //     );
+    //     setFileInvalidDate(false);
+    //     setIsInvalid(false);
+    //   } else {
+    //     setFileInvalidDate(true);
+    //     setIsInvalid(true);
+    //   }
+    // }
   }, [formData]);
 
   const validateDate = (day: number, month: number, year: number): boolean => {
