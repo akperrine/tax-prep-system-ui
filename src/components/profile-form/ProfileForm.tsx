@@ -122,9 +122,13 @@ function ProfileForm({
       console.log("all good but valid");
     }
     if (isValidDate) {
-      setFileInvalidDate(true);
+      if (setFileInvalidDate) {
+        setFileInvalidDate(true);
+      }
     } else {
-      setFileInvalidDate(false);
+      if (setFileInvalidDate) {
+        setFileInvalidDate(false);
+      }
     }
 
     // if (setFileInvalidDate) {
@@ -183,7 +187,9 @@ function ProfileForm({
 
     const isValidDate = validateDate(day, month, year);
     if (!isValidDate) {
-      setInvalidDate(true);
+      if (setFileInvalidDate) {
+        setInvalidDate(true);
+      }
     } else {
       let date = new Date(year, month - 1, day);
       let ISODate = date.toISOString();
