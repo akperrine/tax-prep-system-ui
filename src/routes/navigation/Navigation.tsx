@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { clearUser } from "../../redux/slices/userSlice";
 
 function Navigation() {
-  // Figure out the typing
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ function Navigation() {
       File taxes
     </Link>,
     <Link className="nav-link" to={"/display"}>
-      View Deduction
+      View Filing
     </Link>,
     <Link className="nav-link" to={"/profile"}>
       Profile
@@ -43,7 +42,7 @@ function Navigation() {
     <>
       <nav className="navbar">
         <img className="logo" src="src/assets/tax-prepped.png" alt="logo" />
-        {user && renderNavLinks()}
+        {user !== null && renderNavLinks()}
       </nav>
       <Outlet />
     </>

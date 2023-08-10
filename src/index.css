@@ -30,10 +30,7 @@
 
 body {
   margin: 0;
-  padding: 0px;
-  /* place-items: center; */
-  /* min-width: 320px; */
-  /* min-height: 100vh; */
+  padding: 0;
 }
 
 ol {

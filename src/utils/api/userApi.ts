@@ -1,5 +1,7 @@
 import { ILoginUserDTO, ISignUpUserDTO, IUser } from "../interfaces";
+
 export const getUser = async (userData: ILoginUserDTO) => {
+  console.log(userData);
   const response = await fetch("http://localhost:8080/login", {
     method: "POST",
     headers: {
@@ -7,17 +9,20 @@ export const getUser = async (userData: ILoginUserDTO) => {
     },
     body: JSON.stringify(userData),
   });
+  console.log(response);
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
   }
   const data = await response.json();
+  console.log(data, "data");
   return data;
 };
 
 export const addUser = async (newUserData: ISignUpUserDTO) => {
-  const response = await await fetch("http://localhost:8080/user/register", {
+  const response = await await fetch("http://localhost:8080/register", {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -44,6 +49,7 @@ export const updateUser = async (userData: IUser): Promise<IUser> => {
   );
   if (!response.ok) {
     const errorMessage = await response.text();
+    console.log(response);
     throw new Error(errorMessage);
   }
   const data = await response.json();

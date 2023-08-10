@@ -1,3 +1,8 @@
+export enum FilingStatusOptions {
+  SINGLE = "single",
+  MARRIED_FILING_JOINTLY = "jointly",
+}
+
 export enum USStates {
   Alabama = "Alabama",
   Alaska = "Alaska",

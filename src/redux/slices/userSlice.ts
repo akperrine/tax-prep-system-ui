@@ -10,18 +10,19 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<IUser>) => {
+      console.log(action);
       state.user = action.payload;
     },
     clearUser: (state) => {
       state.user = null;
     },
-    updateLocation: (state, action: PayloadAction<ILocation>) => {
+    updateTaxDoc: (state, action) => {
       if (state.user) {
-        state.user.location = action.payload;
+        state.user.taxDocuments?.push(action.payload);
       }
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, updateTaxDoc } = userSlice.actions;
 export default userSlice.reducer;

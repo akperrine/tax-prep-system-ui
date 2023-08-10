@@ -20,7 +20,6 @@ const defaultFormInput = {
   email: "",
   password: "",
 };
-
 function SignUpForm() {
   const [formInput, setFormInput] = useState(defaultFormInput);
   const [showPassword, setShowPassword] = useState(false);
