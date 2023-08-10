@@ -8,11 +8,10 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { useState } from "react";
-import { Link, json, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ILoginUserDTO, IUser } from "../../utils/interfaces";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/userSlice";
-import { StateAbbreviation } from "../../utils/enums";
 import { getUser } from "../../utils/api/userApi";
 
 const defaultFormInput = {
@@ -102,13 +101,6 @@ function LoginForm() {
                 Google Sign In
               </Button>
             </p>
-            {/* <a
-              className="usa-b"
-              href="javascript:void(0);"
-              title="Forgot password"
-              >
-              Forgot password?
-            </a> */}
           </Fieldset>
         </Form>
       </Card>

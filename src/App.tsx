@@ -9,7 +9,6 @@ import Profile from "./routes/Profile";
 import SignUp from "./routes/signup/SignUp";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
-// import { useTranslation } from "react-i18next";å
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -23,7 +22,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Outlet />}>
                 <Route index element={<Home />} />
-                {/* <Route path="/login" element={<Login />} /> */}
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/file" element={<TaxFile />} />
                 <Route path="/display" element={<TaxView />} />

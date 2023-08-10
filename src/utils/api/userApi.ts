@@ -9,13 +9,11 @@ export const getUser = async (userData: ILoginUserDTO) => {
     },
     body: JSON.stringify(userData),
   });
-  console.log(response);
   if (!response.ok) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
   }
   const data = await response.json();
-  console.log(data, "data");
   return data;
 };
 
