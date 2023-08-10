@@ -136,10 +136,6 @@ function TaxFile() {
       profileFormData.address2 === "" ? null : profileFormData.address2;
     const social = profileFormData.ssn.replace(/\-/g, "");
 
-    // const isValidDate = validateDate(day, month, year);
-    // if (!isValidDate) {
-    // setInvalidDate(true);
-    // } else {
     let date = new Date(year, month - 1, day);
     let ISODate = date.toISOString();
     if (user) {

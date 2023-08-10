@@ -18,7 +18,7 @@ const userSlice = createSlice({
     },
     updateTaxDoc: (state, action) => {
       if (state.user) {
-        state.user.taxDocuments = action.payload;
+        state.user.taxDocuments?.push(action.payload);
       }
     },
   },
