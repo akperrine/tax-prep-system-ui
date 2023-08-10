@@ -10,7 +10,7 @@ import {
   ModalRef,
   ModalToggleButton,
 } from "@trussworks/react-uswds";
-import { useEffect, useRef } from "react";
+import { MouseEventHandler, useRef } from "react";
 
 function FileStart({ handleClick }) {
   const modalRef = useRef<ModalRef>(null);

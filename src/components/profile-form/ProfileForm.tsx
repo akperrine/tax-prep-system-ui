@@ -51,7 +51,6 @@ function ProfileForm({
         updateDay = yearMonthDay[2];
       }
       if (user?.ssn) {
-        // setFormData({ ...formData, ssn: user.ssn });
         updateSsn = user.ssn;
       }
       if (user?.location) {
@@ -59,13 +58,6 @@ function ProfileForm({
         updateCity = user.location.city;
         updateState = user.location.state;
         updateZipcode = user.location.zipcode.toString();
-        // setFormData({
-        //   ...formData,
-        //   address1: user.location.address,
-        //   city: user.location.city,
-        //   state: user.location.state,
-        //   zipcode: user.location.zipcode.toString(),
-        // });
       }
       console.log(updateDay);
       setFormData({
@@ -115,8 +107,8 @@ function ProfileForm({
       }
       console.log("not good");
     } else {
+      setNoLocation(false);
       if (setIsInvalid) {
-        setNoLocation(false);
         setIsInvalid(false);
       }
       console.log("all good but valid");
@@ -130,29 +122,6 @@ function ProfileForm({
         setFileInvalidDate(false);
       }
     }
-
-    // if (setFileInvalidDate) {
-    //   if (
-    //     validateDate(
-    //       parseInt(formData.day),
-    //       parseInt(formData.month),
-    //       parseInt(formData.year)
-    //     )
-    //   ) {
-    //     console.log(
-    //       validateDate(
-    //         parseInt(formData.day),
-    //         parseInt(formData.month),
-    //         parseInt(formData.year)
-    //       )
-    //     );
-    //     setFileInvalidDate(false);
-    //     setIsInvalid(false);
-    //   } else {
-    //     setFileInvalidDate(true);
-    //     setIsInvalid(true);
-    //   }
-    // }
   }, [formData]);
 
   const validateDate = (day: number, month: number, year: number): boolean => {
@@ -178,6 +147,14 @@ function ProfileForm({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInvalidDate(false);
+
+    if (noLocation) {
+      setVisibleToast(true);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 3000);
+      return;
+    }
 
     const day = parseInt(formData.day);
     const month = parseInt(formData.month);
@@ -231,12 +208,21 @@ function ProfileForm({
             visibleToast ? "visible" : ""
           }`}
         >
-          <Alert
-            type="success"
-            heading="Profile Updated"
-            headingLevel="h4"
-            className="margin-3"
-          ></Alert>
+          {noLocation ? (
+            <Alert
+              type="error"
+              heading="Invalid: Missing Info"
+              headingLevel="h4"
+              className="margin-3"
+            ></Alert>
+          ) : (
+            <Alert
+              type="success"
+              heading="Profile Updated"
+              headingLevel="h4"
+              className="margin-3"
+            ></Alert>
+          )}
         </div>
         <h2>{`${formHeading}`}</h2>
         <div className="profile-alert-container">

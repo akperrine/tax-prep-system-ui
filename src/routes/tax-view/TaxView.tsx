@@ -3,6 +3,7 @@ import "./TaxView.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect, useState } from "react";
+import { getTaxCalcBeforeSubmit } from "../../utils/api/taxApi";
 
 function TaxView() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -17,12 +18,28 @@ function TaxView() {
     taxDocumentLength = user.taxDocuments.length;
   }
 
-  // useEffect(() => {
-  //   if (user?.taxDocuments && user.taxDocuments.length > 0) {
-  //     const totalIncome = user.taxDocuments[0].
-  //     setTaxBreakdown({ ...taxBreakdown, taxRate:});
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user?.taxDocuments && user.taxDocuments.length > 0) {
+      const latestTaxDoc = user.taxDocuments[user.taxDocuments.length - 1];
+      const totIncome =
+        parseInt(latestTaxDoc.form1099s[0].income) +
+        parseInt(latestTaxDoc.formW2s[0].income);
+      // console.log(latestTaxDoc, totIncome);
+      (async () => {
+        const taxCalc = await getTaxCalcBeforeSubmit(latestTaxDoc);
+        console.log(taxCalc);
+        const afterTax = totIncome - taxCalc;
+        const taxRate = Math.round((taxCalc / totIncome) * 10000) / 100;
+        setTaxBreakdown({
+          ...taxBreakdown,
+          totalIncome: totIncome,
+          amountOwed: taxCalc,
+          incomeAfterTaxes: afterTax,
+          taxRate: taxRate,
+        });
+      })();
+    }
+  }, []);
 
   return (
     <>

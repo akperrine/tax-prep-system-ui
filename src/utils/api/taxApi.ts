@@ -18,9 +18,8 @@ export const addTaxDocument = async (taxInfo: ITaxDocumentsDto) => {
 };
 
 export const getTaxCalcBeforeSubmit = async (taxInfo: ITaxDocumentsDto) => {
-  console.log(`http://localhost:8080/tax/documents/calculate`);
   const response = await fetch(
-    `http://localhost:8080/user/id/${taxInfo.userId}/document`,
+    `http://localhost:8080/tax/documents/calculate`,
     {
       method: "POST",
       headers: {

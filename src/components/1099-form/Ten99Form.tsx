@@ -6,8 +6,9 @@ import {
   TextInput,
 } from "@trussworks/react-uswds";
 import { useEffect } from "react";
+import { ITen99FormProps } from "../../utils/interfaces";
 
-function Ten99From({ formData, handleChange, setIsInvalid }) {
+function Ten99From({ formData, handleChange, setIsInvalid }: ITen99FormProps) {
   const handleSubmit = () => {};
 
   useEffect(() => {

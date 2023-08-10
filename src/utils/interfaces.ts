@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 //DTOs
 export interface ILoginUserDTO {
   email: string;
@@ -81,4 +83,29 @@ export interface ITaxFormData {
   ten99City: string;
   ten99State: string;
   ten99Zipcode: string;
+}
+
+export interface IProfileFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  day: string;
+  month: string;
+  year: string;
+  ssn: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+}
+
+// Props
+
+export interface IW2FormProps {}
+
+export interface ITen99FormProps {
+  formData: ITaxFormData;
+  handleChange: () => {};
+  setIsInvalid: Dispatch<SetStateAction<boolean>>;
 }
