@@ -53,6 +53,7 @@ function TaxFile() {
   const [isInvalid, setIsInvalid] = useState(false);
   const [invalidDate, setInvalidDate] = useState(false);
   const [invalidNext, setInvalidNext] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
 
   useEffect(() => {
     console.log(isInvalid);
@@ -209,6 +210,10 @@ function TaxFile() {
     try {
       const response = await addTaxDocument(taxDocumentDto);
       dispatch(updateTaxDoc(response));
+      setVisibleToast(true);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 3000);
     } catch (error) {}
   };
 
@@ -265,6 +270,18 @@ function TaxFile() {
     <>
       {readyToFile ? (
         <div>
+          <div
+            className={`profile-update-notification ${
+              visibleToast ? "visible" : ""
+            }`}
+          >
+            <Alert
+              type="success"
+              heading="Tax Document Filed"
+              headingLevel="h4"
+              className="margin-3"
+            ></Alert>
+          </div>
           {invalidNext && (
             <Alert type="error" headingLevel="h4" className="margin-1" noIcon>
               Missing valid input
